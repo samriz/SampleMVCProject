@@ -7,12 +7,17 @@ namespace InterviewTest.Models
 {
     public class Form
     {
-        private string firstName;
+        private string firstName; //required
         private string middleName;
-        private string lastName;
-        private int positionID;
+        private string lastName; //required
+        private int positionID; //required
         private string comments;
-        private string remote;
+        private string remote; //required
+
+        public Form()
+        {
+
+        }
 
         //getters
         public string GetFirstName() => firstName;
