@@ -156,7 +156,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\City.cs" />
-    <Compile Include="Models\Form.cs" />
+    <Compile Include="Models\Applicant.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

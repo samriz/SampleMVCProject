@@ -16,7 +16,7 @@ namespace InterviewTest.Controllers
 
         public ActionResult PartOne()
         {
-            Form form = new Form();
+            Applicant form = new Applicant();
             return View();
         }
 
