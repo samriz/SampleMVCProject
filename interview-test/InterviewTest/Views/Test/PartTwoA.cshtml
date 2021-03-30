@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Part II A";
+}
+
+<div class="row">
+    <h1>Part II A</h1>
+    <p>
+        Using the <i>[InterviewTest].[dbo].[Office]</i> table from the LocalDB in this project, output the following fields via DataTables and AJAX:
+        <ol>
+            <li>Office Name</li>
+            <li>Address</li>
+            <li>Region</li>
+            <li>Number of Employees</li>
+        </ol>
+        Disallow sorting by Address (<a target="_blank" href="~/Content/Images/part-one-example.png">example</a>).
+        Read more about DataTables & AJAX <a target="_blank" href="https://datatables.net/manual/ajax">here.</a></p>
+    <p>Add your code to this view.</p>
+    <hr />
+</div>
+
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('table').dataTable({
+                //ajax call here
+            });
+        });
+    </script>
+}

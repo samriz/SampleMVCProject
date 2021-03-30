@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Part I";
+}
+
+<div class="row">
+    <h1>Part I</h1>
+    <p>
+        Create a simple Applicant form, which inserts the following fields to the <i>[InterviewTest].[dbo].[Applicant]</i> table:
+        <ul>
+            <li>First name (required)</li>
+            <li>Middle name</li>
+            <li>Last name (required)</li>
+            <li>Position Id (required)</li>
+            <li>Comments</li>
+            <li>Remote (required)</li>
+        </ul>
+    </p>
+    <p>Implement front-end (javascript) <b>AND</b> back-end (server-side) validation on required fields. Only a valid form should be inserted into the database!</p>
+    <p>Add your code to this view.</p>
+    <hr/>
+
+    <!-- Your code here -->
+    
+    <form action="" method="post">
+        <p><input type="text" name="firstname" placeholder="First Name" required /></p>
+        <p><input type="text" name="middlename" placeholder="Middle Name" /></p>
+        <p><input type="text" name="lastname" placeholder="Last Name" required /></p>
+        <p><input type="text" name="positionid" placeholder="Position Id" required /></p>
+        <p><textarea type="text" name="comments" placeholder="Comments"></textarea></p>
+        <p><input type="text" name="remote" placeholder="Remote" required/></p>
+        <p><button onclick="mailfunction()">Submit</button></p>
+    </form>
+    @{
+
+
+     }
+</div>

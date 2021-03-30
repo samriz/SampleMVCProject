@@ -1,0 +1,18 @@
+﻿@model List<City>
+@{
+    ViewBag.Title = "Part III";
+
+    /*
+    * This page is throwing a server error, investigate and fix the root of this problem without modifying city list.
+    * Feel free to add comments here explaining your solution.
+    */
+}
+<div class="row">
+    <h1>Results</h1>
+
+    @foreach (var c in Model)
+    {
+        <p>@c.DisplayFullDetails()</p>
+    }
+
+</div>

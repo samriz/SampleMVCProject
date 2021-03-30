@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <h1>Welcome</h1>
+    <p>This test requires Visual Studio 2015+ with LocalDB. Click the Setup button if you need further instruction.</p>
+    <p>
+        <a id="setup-btn" class="btn btn-default" href="javascript:void(0);">Setup &darr;</a>
+        <ul id="setup" style="display: none;">
+            <li><a target="_blank" href="https://visualstudio.microsoft.com/downloads/">Download Visual Studio</a> (Community is the most lightweight).</li>
+            <li>When installing, you will need to check the <b>ASP.NET and web development</b> section within the workloads tab, along with <b>ASP.NET MVC 4</b> in the Optional area.<img src="~/Content/Images/visual-studio-download.png" /></li>
+            <li>
+                Once installed, you will need to figure out how you'll connect to the database. Here are a few options:
+                <ul>
+                    <li>Visual Studio comes with a Server Explorer for querying the Local DB, you just need to double click the <b>InterviewTest.mdf</b> file in the App_Data folder.<img src="~/Content/Images/visual-studio-server-explorer.png" /></li>
+                    <li>You can <a href="https://go.microsoft.com/fwlink/?linkid=2014306">download</a> Sql Server Managment Studio, connect to the LocalDB, server name: (LocalDb)\MSSQLLocalDB, and attach to the database file in the App_Data folder. <img src="~/Content/Images/sql-server-managment-studio.png" /></li>
+                </ul>
+            </li>
+            <li>You are ready to begin the test!</li>
+        </ul>
+    </p>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h2>Part I</h2></div>
+            <div class="panel-body">
+                <p>Creating a contact form with validation</p>
+                <p><a class="btn btn-default" href="@Url.Action("PartOne", "Test")">Go &raquo;</a></p>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading"><h2>Part II</h2></div>
+            <div class="panel-body">
+                <p>Choose one of the following:</p>
+                <div class="col-md-5">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p>Using a js library to output data</p>
+                            <p><a class="btn btn-default" href="@Url.Action("PartTwoA", "Test")">Go &raquo;</a></p>
+                        </li>
+                        <li class="list-group-item">
+                            <p>Data filtering</p>
+                            <p><a class="btn btn-default" href="@Url.Action("PartTwoB", "Test")">Go &raquo;</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading"><h2>Part III</h2></div>
+            <div class="panel-body">
+                <p>Resolving a server error.</p>
+                <p><a class="btn btn-default" href="@Url.Action("PartThree", "Test")">Go &raquo;</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#setup-btn').click(function () {
+                $('#setup').toggle(function () {
+                    if ($(this).is(':hidden')) {
+                        $('#setup-btn').html("Setup &darr;");
+                    }
+                    else {
+                        $('#setup-btn').html("Setup &uarr;");
+                    }
+                });
+            });
+        });
+    </script>
+}
