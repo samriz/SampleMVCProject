@@ -1,4 +1,4 @@
-﻿@model List<Employee>
+﻿@model Tuple<List<Employee>,List<Office>,List<Position>>
 
 @{
     ViewBag.Title = "Part II B";
@@ -21,7 +21,7 @@
         </ol>
     </p>
     <p>Add your code to this view.</p>
-    <hr />
+    <hr/>
 
     <!-- Your code here -->
 
@@ -32,13 +32,11 @@
             <th>City</th>
             <th>Country</th>
         </tr>
-        @foreach (Employee employee in Model)
+        @foreach (Employee employee in Model.Item1)
         {
             <tr>
                 <td>@employee.firstName</td>
                 <td>@employee.lastName</td>
-                <td>@employee.officeId</td>
-                <td>@customer.Country</td>
             </tr>
         }
     </table>

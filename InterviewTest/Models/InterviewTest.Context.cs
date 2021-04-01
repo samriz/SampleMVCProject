@@ -13,10 +13,10 @@ namespace InterviewTest.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class InterviewTestEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public InterviewTestEntities()
-            : base("name=InterviewTestEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -25,6 +25,9 @@ namespace InterviewTest.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Applicant> Applicants { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Office> Offices { get; set; }
+        public virtual DbSet<Position> Positions { get; set; }
     }
 }

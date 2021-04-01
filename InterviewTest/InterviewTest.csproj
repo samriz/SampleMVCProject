@@ -201,6 +201,42 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Employee.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Office.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Office.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Office.cs">
+      <DependentUpon>Office.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Office.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Office.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Office1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Office.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Position.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Position.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Position.cs">
+      <DependentUpon>Position.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Position.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Position.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Position1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Position.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\State.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -233,6 +269,26 @@
       <DependentUpon>Employee.edmx</DependentUpon>
       <LastGenOutput>Employee1.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\Office.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Office.edmx</DependentUpon>
+      <LastGenOutput>Office.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Office.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Office.edmx</DependentUpon>
+      <LastGenOutput>Office1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Position.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Position.edmx</DependentUpon>
+      <LastGenOutput>Position.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Position.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Position.edmx</DependentUpon>
+      <LastGenOutput>Position1.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Employee.edmx">
@@ -248,6 +304,20 @@
     </EntityDeploy>
     <Content Include="Models\Applicant.edmx.diagram">
       <DependentUpon>Applicant.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Office.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Office.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Office.edmx.diagram">
+      <DependentUpon>Office.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Position.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Position.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Position.edmx.diagram">
+      <DependentUpon>Position.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
