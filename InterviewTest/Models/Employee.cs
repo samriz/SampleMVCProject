@@ -12,14 +12,17 @@ namespace InterviewTest.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Applicant
+    public partial class Employee
     {
         public int id { get; set; }
         public string firstName { get; set; }
         public string middleName { get; set; }
         public string lastName { get; set; }
-        public int positionId { get; set; }
-        public string comments { get; set; }
+        public Nullable<bool> isPartTime { get; set; }
         public Nullable<bool> remote { get; set; }
+        public Nullable<int> positionId { get; set; }
+        public Nullable<int> officeId { get; set; }
+        public Nullable<System.DateTime> startDate { get; set; }
+        public Nullable<System.DateTime> endDate { get; set; }
     }
 }

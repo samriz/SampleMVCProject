@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<Employee>
+
+@{
     ViewBag.Title = "Part II B";
 }
 
@@ -9,7 +11,8 @@
         <ol>
             <li>Output each employee's first name, last name, office name, and position name.</li>
             <li>Implement server-side pagination of 100 records per page.</li>
-            <li>Add ability to filter by one of the following:
+            <li>
+                Add ability to filter by one of the following:
                 <ul>
                     <li>Part Time/Full Time</li>
                     <li>Remote/On site</li>
@@ -21,5 +24,23 @@
     <hr />
 
     <!-- Your code here -->
+
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th>CustomerID</th>
+            <th>ContactName</th>
+            <th>City</th>
+            <th>Country</th>
+        </tr>
+        @foreach (Employee employee in Model)
+        {
+            <tr>
+                <td>@employee.firstName</td>
+                <td>@employee.lastName</td>
+                <td>@employee.officeId</td>
+                <td>@customer.Country</td>
+            </tr>
+        }
+    </table>
 
 </div>

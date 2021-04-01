@@ -21,15 +21,7 @@ namespace InterviewTest.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult PartOne(Applicant applicant)
-        {
-            InterviewTestDBContext db = new InterviewTestDBContext();
-            db.Applicants.Add(applicant);
-            db.SaveChanges();
-            return View();
-        }
+        
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

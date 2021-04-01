@@ -1,5 +1,4 @@
-﻿
-@model Applicant
+﻿@model Applicant
 @{
     ViewBag.Title = "Part I";
 }
@@ -19,7 +18,7 @@
     </p>
     <p>Implement front-end (javascript) <b>AND</b> back-end (server-side) validation on required fields. Only a valid form should be inserted into the database!</p>
     <p>Add your code to this view.</p>
-    <hr />
+    <hr/>
 
     <!-- Your code here -->
     @*@using (Html.BeginForm("PartOne", "Test", FormMethod.Post))*@
@@ -37,7 +36,7 @@
             @Html.TextBoxFor(m => m.lastName)
         </p>
         <p>
-            @Html.TextBoxFor(m => m.positionID)
+            @Html.TextBoxFor(m => m.positionId)
         </p>
         <p>
             @Html.TextAreaFor(m => m.comments)
@@ -45,9 +44,9 @@
         <fieldset id="isRemote" name="isRemote">
             <p>
                 Do you work remotely?
-                @Html.RadioButtonFor(m => m.isRemote, true) Yes
+                @Html.RadioButtonFor(m => m.remote, true) Yes
 
-                @Html.RadioButtonFor(m => m.isRemote, false) No
+                @Html.RadioButtonFor(m => m.remote, false) No
             </p>
         </fieldset>
         <p><input id="Submit" type="submit" value="submit" /></p>
