@@ -61,7 +61,9 @@ namespace InterviewTest.Models
             City mp = new City() { Name = "Metropolis", Latitude = 32.715736f, Longitude = -117.161087f };
             City madison = new City() { Name = "Madison", State = wi, Latitude = 85.27f, Longitude = 70.13f };
 
-            return new List<City> { chicago, sfo, mp, madison };
+            City testcity = new City() { Name = "test city name", State = wi, Latitude = 1.5f, Longitude = 2.3f };
+
+            return new List<City> { chicago, sfo, mp, madison, testcity };
 
         }
         #endregion
