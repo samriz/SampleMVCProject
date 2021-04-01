@@ -9,5 +9,15 @@ namespace InterviewTest.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        /*public State()
+        {
+
+        }*/
+        /*public State(State st)
+        {
+            this.Name = st.Name;
+            this.Id = st.Id;
+        }*/
     }
 }

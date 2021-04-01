@@ -19,21 +19,80 @@
     </p>
     <p>Implement front-end (javascript) <b>AND</b> back-end (server-side) validation on required fields. Only a valid form should be inserted into the database!</p>
     <p>Add your code to this view.</p>
-    <hr/>
+    <hr />
 
     <!-- Your code here -->
-    
-    <form action="" method="post">
-        <p><input type="text" name="firstname" placeholder="First Name" required /></p>
-        <p><input type="text" name="middlename" placeholder="Middle Name" /></p>
-        <p><input type="text" name="lastname" placeholder="Last Name" required /></p>
-        <p><input type="text" name="positionid" placeholder="Position Id" required /></p>
-        <p><textarea type="text" name="comments" placeholder="Comments"></textarea></p>
-        <p><input type="text" name="remote" placeholder="Remote" required/></p>
-        <p><button onclick="mailfunction()">Submit</button></p>
-    </form>
+    @*@using (Html.BeginForm("PartOne", "Test", FormMethod.Post))*@
+    @using (Html.BeginForm())
+    {
+
+        @Html.AntiForgeryToken()
+        <p>
+            @Html.TextBoxFor(m => m.firstName)
+        </p>
+        <p>
+            @Html.TextBoxFor(m => m.middleName)
+        </p>
+        <p>
+            @Html.TextBoxFor(m => m.lastName)
+        </p>
+        <p>
+            @Html.TextBoxFor(m => m.positionID)
+        </p>
+        <p>
+            @Html.TextAreaFor(m => m.comments)
+        </p>
+        <fieldset id="isRemote" name="isRemote">
+            <p>
+                Do you work remotely?
+                @Html.RadioButtonFor(m => m.isRemote, true) Yes
+
+                @Html.RadioButtonFor(m => m.isRemote, false) No
+            </p>
+        </fieldset>
+        <p><input id="Submit" type="submit" value="submit" /></p>
+    }
+
+
+    @*<form id="applicantform" asp-controller="Test" asp-action="SaveFormData" method="post">
+            <fieldset>
+                <p><input type="text" id="firstname" name="firstname" placeholder="First Name" required /></p>
+                <p><input type="text" id="middlename" name="middlename" placeholder="Middle Name" /></p>
+                <p><input type="text" id="lastname" name="lastname" placeholder="Last Name" required /></p>
+                <p><input type="text" id="positionid" name="positionid" placeholder="Position Id" required /></p>
+                <p><textarea type="text" id="comments" name="comments" placeholder="Comments"></textarea></p>
+                <fieldset id="isRemote" name="isRemote">
+                   <p>Do you work remotely?
+                    <input type="radio" id="remote" name="remote" value="1" required />
+                    <label for="remote">Yes</label>
+
+                    <input type="radio" id="remote" name="remote" value="0" required />
+                    <label for="notremote">No</label>
+                   </p>
+                </fieldset>
+                <input type="submit" id="submit" value="submit" name="submit"/>
+            </fieldset>
+        </form>*@
+
+    @*<script>
+            function Submit() {
+                var applicantInfo = {
+                    firstName: $('#firstname').val(),
+                    middleName: $('#middlename').val(),
+                    lastName: $('#lastname').val(),
+                    positionID: $('#positionid').val(),
+                    comments: $('#comments').val(),
+                    remote: $('#remote').is(':checked')
+                    //notremote: $('#notremote').is(':checked')
+                };
+
+                $.post("/Test/PartOne", { applicant: applicantInfo },
+                    function () { alert('Posted.') });
+
+        </script>*@
+
     @{
 
 
-     }
+    }
 </div>

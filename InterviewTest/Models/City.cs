@@ -9,11 +9,27 @@ namespace InterviewTest.Models
     {
         public string Name { get; set; }
 
-        public State State { get; set; }
-        public string StateName { get { return State.Name; } }
+        public State State 
+        { 
+            get; 
+            set; 
+        }
+
+        public string StateName 
+        { 
+            get 
+            { 
+                return State.Name; 
+            } 
+        }
 
         public float? Latitude;
         public float? Longitude;
+
+        public City()
+        {
+            State = new State();
+        }
 
         public string DisplayBasicDetails()
         {
