@@ -11,15 +11,25 @@ namespace InterviewTest.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Applicant
     {
+        [Key]
         public int id { get; set; }
+
+        [Required(ErrorMessage = "First name is required.")]
         public string firstName { get; set; }
         public string middleName { get; set; }
+
+        [Required(ErrorMessage = "Last name is required.")]
         public string lastName { get; set; }
+
+        [Required(ErrorMessage = "Position Id is required.")]
         public int positionId { get; set; }
         public string comments { get; set; }
+
+        [Required(ErrorMessage = "Remote is required.")]
         public Nullable<bool> remote { get; set; }
     }
 }
