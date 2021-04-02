@@ -18,26 +18,26 @@
     </p>
     <p>Implement front-end (javascript) <b>AND</b> back-end (server-side) validation on required fields. Only a valid form should be inserted into the database!</p>
     <p>Add your code to this view.</p>
-    <hr />
+    <hr/>
 
     <!-- Your code here -->
     @*@using (Html.BeginForm("PartOne", "Test", FormMethod.Post))*@
-    @using (Html.BeginForm(new { id = "applicantform", name = "applicantform" }))
+    @using (Html.BeginForm())
     {
 
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         <p>
-            @Html.TextBoxFor(m => m.firstName, new { @placeholder = "First Name" })
+            @Html.TextBoxFor(m => m.firstName, new { @placeholder = "First Name", required = "required" })
         </p>
         <p>
             @Html.TextBoxFor(m => m.middleName, new { @placeholder = "Middle Name" })
         </p>
         <p>
-            @Html.TextBoxFor(m => m.lastName, new { @placeholder = "Last Name" })
+            @Html.TextBoxFor(m => m.lastName, new { @placeholder = "Last Name", required = "required" })
         </p>
         <p>
-            @Html.TextBoxFor(m => m.positionId, new { @placeholder = "Position Id" })
+            @Html.TextBoxFor(m => m.positionId, new { @placeholder = "Position Id", required = "required" })
         </p>
         <p>
             @Html.TextAreaFor(m => m.comments, new { @placeholder = "Any Comments" })
@@ -50,39 +50,6 @@
                 @Html.RadioButtonFor(m => m.remote, false) No
             </p>
         </fieldset>
-        <p><input id="Submit" type="submit" value="submit" onclick="validate()" /></p>
+        <p><input id="Submit" type="submit" value="submit"/></p>
     }
-
-    @*<script>
-            function validate()
-            {
-                var firstName = document.forms["applicantform"]["firstName"].value;
-                if (firstName == "")
-                {
-                    alert("First name is required.");
-                    return false;
-                }
-                var lastName = document.forms["applicantform"]["lastName"].value;
-                if (lastName == "")
-                {
-                    alert("Last name is required.");
-                    return false;
-                }
-                var positionId = document.forms["applicantform"]["positionId"].value;
-                if (positionId == "") {
-                    alert("Position Id is required.");
-                    return false;
-                }
-                var remote = document.forms["applicantform"]["remote"].value;
-                if (remote == "")
-                {
-                    alert("Remote status is required.");
-                    return false;
-                }
-                alert("Form Submitted.");
-
-                return true;
-            }
-
-        </script>*@
 </div>

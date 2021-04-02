@@ -29,20 +29,15 @@ namespace InterviewTest.Controllers
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             var applicants = interviewTestEntities.Applicants;
-            //if (applicant.firstName == null || applicant.firstName.Length < 1)
-            //{
-            //    ModelState.AddModelError("firstName", "First name is required.");
-            //    throw new ArgumentNullException();
-            //}
-            //if (applicant.lastName == null || applicant.lastName.Length < 1)
-            //{
-            //    ModelState.AddModelError("lastName", "Last name is required.");
-            //    throw new ArgumentNullException();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            int entriessaved = 0;
             try
             {
                 applicants.Add(applicant);
-                interviewTestEntities.SaveChangesAsync();
+                entriessaved = interviewTestEntities.SaveChanges();
             }
             catch(DbEntityValidationException e)
             {

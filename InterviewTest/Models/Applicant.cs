@@ -18,10 +18,14 @@ namespace InterviewTest.Models
         [Key]
         public int id { get; set; }
 
+        [StringLength(250, MinimumLength = 1, ErrorMessage = "First name must be under 250 characters.")]
         [Required(ErrorMessage = "First name is required.")]
         public string firstName { get; set; }
+
+        [StringLength(250, MinimumLength = 0, ErrorMessage = "Middle name must be under 250 characters.")]
         public string middleName { get; set; }
 
+        [StringLength(250, MinimumLength = 1, ErrorMessage = "Last name must be under 250 characters.")]
         [Required(ErrorMessage = "Last name is required.")]
         public string lastName { get; set; }
 
