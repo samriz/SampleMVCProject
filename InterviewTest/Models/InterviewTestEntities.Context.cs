@@ -13,10 +13,10 @@ namespace InterviewTest.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class InterviewTestEntities : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public InterviewTestEntities()
+            : base("name=InterviewTestEntities")
         {
         }
     
@@ -29,5 +29,6 @@ namespace InterviewTest.Models
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Office> Offices { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<Region> Regions { get; set; }
     }
 }

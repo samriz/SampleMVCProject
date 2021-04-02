@@ -164,78 +164,36 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Applicant.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Applicant.Context.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Applicant.cs">
-      <DependentUpon>Applicant.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Applicant.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Applicant.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Applicant1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Applicant.tt</DependentUpon>
+      <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\City.cs" />
-    <Compile Include="Models\Employee.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Employee.Context.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Employee.cs">
-      <DependentUpon>Employee.tt</DependentUpon>
+      <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Employee.Designer.cs">
+    <Compile Include="Models\InterviewTestEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Employee.edmx</DependentUpon>
+      <DependentUpon>InterviewTestEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Employee1.cs">
+    <Compile Include="Models\InterviewTestEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Employee.tt</DependentUpon>
+      <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Office.Context.cs">
+    <Compile Include="Models\InterviewTestEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Office.Context.tt</DependentUpon>
+      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Office.cs">
-      <DependentUpon>Office.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Office.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Office.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Office1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Office.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Position.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Position.Context.tt</DependentUpon>
+      <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Position.cs">
-      <DependentUpon>Position.tt</DependentUpon>
+      <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Position.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Position.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Position1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Position.tt</DependentUpon>
+    <Compile Include="Models\Region.cs">
+      <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\State.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -249,75 +207,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Applicant.Context.tt">
+    <Content Include="Models\InterviewTestEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Applicant.edmx</DependentUpon>
-      <LastGenOutput>Applicant.Context.cs</LastGenOutput>
+      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
+      <LastGenOutput>InterviewTestEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Applicant.tt">
+    <Content Include="Models\InterviewTestEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Applicant.edmx</DependentUpon>
-      <LastGenOutput>Applicant1.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Employee.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Employee.edmx</DependentUpon>
-      <LastGenOutput>Employee.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Employee.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Employee.edmx</DependentUpon>
-      <LastGenOutput>Employee1.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Office.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Office.edmx</DependentUpon>
-      <LastGenOutput>Office.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Office.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Office.edmx</DependentUpon>
-      <LastGenOutput>Office1.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Position.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Position.edmx</DependentUpon>
-      <LastGenOutput>Position.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Position.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Position.edmx</DependentUpon>
-      <LastGenOutput>Position1.cs</LastGenOutput>
+      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
+      <LastGenOutput>InterviewTestEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Employee.edmx">
+    <EntityDeploy Include="Models\InterviewTestEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Employee.Designer.cs</LastGenOutput>
+      <LastGenOutput>InterviewTestEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Employee.edmx.diagram">
-      <DependentUpon>Employee.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\Applicant.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Applicant.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Applicant.edmx.diagram">
-      <DependentUpon>Applicant.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\Office.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Office.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Office.edmx.diagram">
-      <DependentUpon>Office.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\Position.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Position.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Position.edmx.diagram">
-      <DependentUpon>Position.edmx</DependentUpon>
+    <Content Include="Models\InterviewTestEntities.edmx.diagram">
+      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

@@ -1,5 +1,5 @@
-﻿@model Tuple<List<Employee>,List<Office>,List<Position>>
-
+﻿@model Tuple<IEnumerable<Employee>,IEnumerable<Office>,IEnumerable<Position>>
+@*@model IEnumerable<Employee>*@
 @{
     ViewBag.Title = "Part II B";
 }
@@ -21,24 +21,26 @@
         </ol>
     </p>
     <p>Add your code to this view.</p>
-    <hr/>
+    <hr />
 
     <!-- Your code here -->
 
     <table cellpadding="0" cellspacing="0">
         <tr>
-            <th>CustomerID</th>
-            <th>ContactName</th>
-            <th>City</th>
-            <th>Country</th>
+            <th>firstName</th>
+            <th>lastName</th>
         </tr>
-        @foreach (Employee employee in Model.Item1)
+        @foreach (var employee in Model.Item1)
         {
+            foreach (var office in Model.Item2)
+            {
             <tr>
                 <td>@employee.firstName</td>
                 <td>@employee.lastName</td>
+                <td>@office.officeName</td>
             </tr>
+            }
         }
     </table>
-
+    <input id="Submit" type="submit" value="submit" />
 </div>

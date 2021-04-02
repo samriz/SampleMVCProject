@@ -54,11 +54,19 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="position" Type="varchar" MaxLength="250" />
         </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" />
+        </EntityType>
         <EntityContainer Name="InterviewTestModelsStoreContainer">
           <EntitySet Name="Applicant" EntityType="Self.Applicant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Office" EntityType="Self.Office" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -114,18 +122,26 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="position1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="InterviewTestEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Applicants" EntityType="Self.Applicant" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Offices" EntityType="Self.Office" />
           <EntitySet Name="Positions" EntityType="Self.Position" />
+          <EntitySet Name="Regions" EntityType="Self.Region" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="InterviewTestModelsStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="InterviewTestModelsStoreContainer" CdmEntityContainer="InterviewTestEntities">
           <EntitySetMapping Name="Applicants">
             <EntityTypeMapping TypeName="InterviewTest.Models.Applicant">
               <MappingFragment StoreEntitySet="Applicant">
@@ -176,6 +192,14 @@
               <MappingFragment StoreEntitySet="Position">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="position1" ColumnName="position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regions">
+            <EntityTypeMapping TypeName="InterviewTest.Models.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
