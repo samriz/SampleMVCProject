@@ -13,15 +13,9 @@ namespace InterviewTest.Controllers
 {
     public class TestController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index(){return View();}
 
-        public ActionResult PartOne()
-        {
-            return View();
-        }
+        public ActionResult PartOne(){return View();}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -29,10 +23,7 @@ namespace InterviewTest.Controllers
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             var applicants = interviewTestEntities.Applicants;
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+            if (!ModelState.IsValid) return View();            
             int entriessaved = 0;
             try
             {
@@ -46,21 +37,31 @@ namespace InterviewTest.Controllers
             return View();
         }
 
-        public ActionResult PartTwoA()
-        {
-            return View();
-        }
+        public ActionResult PartTwoA() {return View();}
        
         public ActionResult PartTwoB()
         {
-            //InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
-            //IEnumerable<Employee> employees = interviewTestEntities.Employees;
-            //IEnumerable<Office> offices = interviewTestEntities.Offices;
-            //IEnumerable<Position> positions = interviewTestEntities.Positions;
+            InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
+            IEnumerable<Employee> employees = interviewTestEntities.Employees;
+            IEnumerable<Office> offices = interviewTestEntities.Offices;
+            IEnumerable<Position> positions = interviewTestEntities.Positions;
+            
+            //SQL
+            string query = @"select Employee.firstName, Employee.lastName, Office.officeName, Position.position from Employee inner join Office on Employee.officeId = Office.id inner join Position on Position.id = Employee.positionId";
 
-            ////linq
+            //LINQ
+            IEnumerable<dynamic> employeesAndTheirOfficesAndPositions = 
+
+                  from employee in employees 
+                  join office in offices on employee.officeId equals office.id 
+                  join position in positions on employee.positionId equals position.id 
+                  select new 
+                  { 
+                      employee.firstName, employee.lastName, office.officeName, position.position 
+                  };
+           
             //var q = from employee in employees.Take(100) select employee;         
-            return View();
+            return View(employeesAndTheirOfficesAndPositions);
         }
 
         [HandleError(View = "PartThreeError")]

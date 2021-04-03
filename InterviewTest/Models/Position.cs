@@ -15,6 +15,6 @@ namespace InterviewTest.Models
     public partial class Position
     {
         public int id { get; set; }
-        public string position1 { get; set; }
+        public string position { get; set; }
     }
 }

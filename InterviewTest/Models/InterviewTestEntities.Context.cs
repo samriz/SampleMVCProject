@@ -17,9 +17,7 @@ namespace InterviewTest.Models
     public partial class InterviewTestEntities : DbContext
     {
         public InterviewTestEntities()
-            : base("name=InterviewTestEntities")
-        {
-        }
+            : base("name=InterviewTestEntities"){}
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
