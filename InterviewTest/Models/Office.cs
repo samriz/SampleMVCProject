@@ -11,13 +11,23 @@ namespace InterviewTest.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Office
     {
+        [Key]
         public int id { get; set; }
+
+        [StringLength(250, MinimumLength = 1, ErrorMessage = "Office name must be under 251 characters.")]
         public string officeName { get; set; }
+
+        [StringLength(250, MinimumLength = 1, ErrorMessage = "Address must be under 251 characters.")]
         public string address { get; set; }
+
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "City must be under 51 characters.")]
         public string city { get; set; }
+
+        [StringLength(2, MinimumLength = 1, ErrorMessage = "State must be under 3 characters.")]
         public string state { get; set; }
         public string postalCode { get; set; }
         public Nullable<int> regionId { get; set; }

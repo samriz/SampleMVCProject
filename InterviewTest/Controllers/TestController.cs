@@ -55,7 +55,7 @@ namespace InterviewTest.Controllers
                   from employee in employees 
                   join office in offices on employee.officeId equals office.id 
                   join position in positions on employee.positionId equals position.id 
-                  select new 
+                  select new
                   { 
                       employee.firstName, employee.lastName, office.officeName, position.position 
                   };

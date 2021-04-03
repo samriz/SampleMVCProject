@@ -11,10 +11,14 @@ namespace InterviewTest.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Position
     {
+        [Key]
         public int id { get; set; }
+
+        [StringLength(250, MinimumLength = 1, ErrorMessage = "Position must be under 251 characters.")]
         public string position { get; set; }
     }
 }
