@@ -189,6 +189,7 @@
     <Compile Include="Models\Office.cs">
       <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PartTwoBModel.cs" />
     <Compile Include="Models\Position.cs">
       <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>

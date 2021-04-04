@@ -12,18 +12,19 @@ namespace InterviewTest.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Validation;
-
+    
     public partial class InterviewTestEntities : DbContext
     {
         public InterviewTestEntities()
-            : base("name=InterviewTestEntities"){}
+            : base("name=InterviewTestEntities")
+        {
+        }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<Applicant> Applicants { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Office> Offices { get; set; }

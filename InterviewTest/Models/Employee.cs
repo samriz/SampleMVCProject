@@ -11,20 +11,12 @@ namespace InterviewTest.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Employee
     {
-        [Key]
         public int id { get; set; }
-
-        [StringLength(250, MinimumLength = 1, ErrorMessage = "First name must be under 251 characters.")]
         public string firstName { get; set; }
-
-        [StringLength(250, MinimumLength = 1, ErrorMessage = "First name must be under 251 characters.")]
         public string middleName { get; set; }
-
-        [StringLength(250, MinimumLength = 1, ErrorMessage = "First name must be under 251 characters.")]
         public string lastName { get; set; }
         public Nullable<bool> isPartTime { get; set; }
         public Nullable<bool> remote { get; set; }

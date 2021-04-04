@@ -11,29 +11,15 @@ namespace InterviewTest.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Applicant
     {
-        [Key]
         public int id { get; set; }
-
-        [StringLength(250, MinimumLength = 1, ErrorMessage = "First name must be under 251 characters.")]
-        [Required(ErrorMessage = "First name is required.")]
         public string firstName { get; set; }
-
-        [StringLength(250, MinimumLength = 0, ErrorMessage = "Middle name must be under 251 characters.")]
         public string middleName { get; set; }
-
-        [StringLength(250, MinimumLength = 1, ErrorMessage = "Last name must be under 251 characters.")]
-        [Required(ErrorMessage = "Last name is required.")]
         public string lastName { get; set; }
-
-        [Required(ErrorMessage = "Position Id is required.")]
         public int positionId { get; set; }
         public string comments { get; set; }
-
-        [Required(ErrorMessage = "Remote is required.")]
         public Nullable<bool> remote { get; set; }
     }
 }

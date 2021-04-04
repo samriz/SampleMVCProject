@@ -1,5 +1,6 @@
 ﻿@*@model Tuple<IEnumerable<Employee>,IEnumerable<Office>,IEnumerable<Position>>*@
-@model IEnumerable<dynamic>
+@*@model IEnumerable<dynamic>*@
+@model List<PartTwoBModel>
 @{
     ViewBag.Title = "Part II B";
 }
@@ -21,26 +22,27 @@
         </ol>
     </p>
     <p>Add your code to this view.</p>
-    <hr/>
+    <hr />
 
     <!-- Your code here -->
     <!--need to do inner join-->
 
     <table cellpadding="0" cellspacing="0">
         <tr>
-            <th>firstName</th>
-            <th>lastName</th>
-            <th>officeName</th>
-            <th>position</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Office Name</th>
+            <th>Position</th>
         </tr>
-        @foreach (dynamic item in Model)
+        @foreach (PartTwoBModel item in Model)
         {
             <tr>
                 <td>@item.firstName</td>
                 <td>@item.lastName</td>
                 <td>@item.officeName</td>
                 <td>@item.position</td>
-            </tr>           
+            </tr>
+
         }
     </table>
     <input id="Submit" type="submit" value="submit" />
