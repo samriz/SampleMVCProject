@@ -20,23 +20,33 @@ namespace InterviewTest.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PartOne(Applicant applicant)
+        public async Task<ActionResult> PartOne(Applicant applicant)
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             var applicants = interviewTestEntities.Applicants;
             if (!ModelState.IsValid) return View();
-            try
+            
+            Task applicantAdder = Task.Run(() =>
             {
-                applicants.Add(applicant);
-            }
-            catch(DbEntityValidationException e)
-            {
-                ViewBag.MyMessage(e.Message);
-            }
+                try
+                {
+                    applicants.Add(applicant);
+                }
+                catch (DbEntityValidationException e)
+                {
+                    ViewBag.MyMessage(e.Message);
+                }
+            });
+            await applicantAdder;
             return View();
         }
 
         public ActionResult PartTwoA() {return View();}
+
+        //public ActionResult PartTwoB()
+        //{
+        //    return View();
+        //}
 
         public async Task<ActionResult> PartTwoB()
         {
@@ -51,6 +61,7 @@ namespace InterviewTest.Controllers
             IEnumerable<Employee> employees = interviewTestEntities.Employees;
             IEnumerable<Office> offices = interviewTestEntities.Offices;
             IEnumerable<Position> positions = interviewTestEntities.Positions;
+            
             List<PartTwoBModel> p2bList = new List<PartTwoBModel>();
 
             Task execute = Task.Run(() =>
@@ -67,9 +78,11 @@ namespace InterviewTest.Controllers
                         office.officeName,
                         position.position
                     };
+                //convert LINQ query IEnumerable to a List and iterate over it
                 foreach(var item in employeesAndTheirOfficesAndPositions.ToList())
                 {
-                    p2bList.Add(new PartTwoBModel()
+                    //add new object to p2bList and assign each object properties to that of employeesAndTheirOfficesAndPositions
+                    p2bList.Add(new PartTwoBModel() 
                     {
                         firstName = item.firstName,
                         lastName = item.lastName,

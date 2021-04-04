@@ -22,12 +22,12 @@
         </ol>
     </p>
     <p>Add your code to this view.</p>
-    <hr />
+    <hr/>
 
     <!-- Your code here -->
     <!--need to do inner join-->
 
-    <table cellpadding="0" cellspacing="0">
+    <table id="employees" cellpadding="0" cellspacing="0">
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
@@ -42,8 +42,7 @@
                 <td>@item.officeName</td>
                 <td>@item.position</td>
             </tr>
-
         }
     </table>
-    <input id="Submit" type="submit" value="submit" />
+    @*<input type="button" id="view" value="View Employees" onclick="location.href='@Url.Action("UsingLINQAsync", "TestController")'"/>*@<input type="button" id="view" value="View Employees"/><input type="button" id="previous" value="<"><input type="button" id="next" value=">"/>
 </div>
