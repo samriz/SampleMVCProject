@@ -48,14 +48,17 @@ namespace InterviewTest.Controllers
         //    return View();
         //}
 
+        [HttpGet]
         public async Task<ActionResult> PartTwoB()
         {
-            //ActionResult ar = await NotLINQAsync();
-            ActionResult ar = await UsingLINQAsync();
-            return ar;
+            //ActionResult ar = await UsingLINQAsync();
+            //return ar;
+            List<PartTwoBModel> p2bList = await UsingLINQAsync();
+            return View(p2bList);
         }
 
-        public async Task<ActionResult> UsingLINQAsync()
+        //public async Task<ActionResult> UsingLINQAsync()
+        public async Task<List<PartTwoBModel>> UsingLINQAsync()
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             IEnumerable<Employee> employees = interviewTestEntities.Employees;
@@ -92,7 +95,8 @@ namespace InterviewTest.Controllers
                 }
             });
             await execute;
-            return View(p2bList);
+            return p2bList;
+            //return View(p2bList);
         }
 
         public async Task<ActionResult> NotLINQAsync()
