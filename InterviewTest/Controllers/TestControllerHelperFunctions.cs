@@ -15,7 +15,7 @@ namespace InterviewTest.Controllers
     public partial class TestController : Controller
     {
         //public async Task<ActionResult> UsingLINQAsync()
-        public async Task<List<PartTwoBModel>> UsingLINQAsync()
+        public async Task<List<PartTwoBModel>> SolvePartTwoBWithLINQAsync()
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             IEnumerable<Employee> employees = interviewTestEntities.Employees;
@@ -39,8 +39,12 @@ namespace InterviewTest.Controllers
                         position.position
                     };
 
+                double numberOfRowsInTable = employeesAndTheirOfficesAndPositions.Count();
+                double recordsPerPage = 100.0;
+                double numberOfPages = numberOfRowsInTable / recordsPerPage;
+
                 //user pagination here
-                //Paginate(employeesAndTheirOfficesAndPositions);
+                Paginate(employeesAndTheirOfficesAndPositions);
 
                 //convert LINQ query IEnumerable to a List and iterate over it
                 foreach(var item in employeesAndTheirOfficesAndPositions.ToList())
@@ -60,12 +64,14 @@ namespace InterviewTest.Controllers
             //return View(p2bList);
         }
 
-        private void Paginate(IEnumerable<dynamic> queryList, int offset)
+        private void Paginate(IEnumerable<dynamic> queryList, int offset = 100)
         {
            // from item in queryList orderby item.firstName 
         }
 
-        public async Task<ActionResult> NotLINQAsync()
+
+
+        public async Task<ActionResult> SolvePartTwoBWithoutLINQAsync()
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             IEnumerable<Employee> employees = interviewTestEntities.Employees;

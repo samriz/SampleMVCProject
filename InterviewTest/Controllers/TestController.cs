@@ -53,7 +53,7 @@ namespace InterviewTest.Controllers
         {
             //ActionResult ar = await UsingLINQAsync();
             //return ar;
-            List<PartTwoBModel> p2bList = await UsingLINQAsync();
+            List<PartTwoBModel> p2bList = await SolvePartTwoBWithLINQAsync();
             return View(p2bList);
         }
 

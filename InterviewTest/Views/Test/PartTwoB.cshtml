@@ -6,43 +6,84 @@
 }
 
 <div class="row">
-    <h1>Part II B</h1>
-    <p>
-        There are over 1000 <i>[InterviewTest].[dbo].[Employee]</i> records in the database.
-        <ol>
-            <li>Output each employee's first name, last name, office name, and position name.</li>
-            <li>Implement server-side pagination of 100 records per page.</li>
-            <li>
-                Add ability to filter by one of the following:
-                <ul>
-                    <li>Part Time/Full Time</li>
-                    <li>Remote/On site</li>
-                </ul>
-            </li>
-        </ol>
-    </p>
-    <p>Add your code to this view.</p>
-    <hr/>
+<h1>Part II B</h1>
+<p>
+    There are over 1000 <i>[InterviewTest].[dbo].[Employee]</i> records in the database.
+    <ol>
+        <li>Output each employee's first name, last name, office name, and position name.</li>
+        <li>Implement server-side pagination of 100 records per page.</li>
+        <li>
+            Add ability to filter by one of the following:
+            <ul>
+                <li>Part Time/Full Time</li>
+                <li>Remote/On site</li>
+            </ul>
+        </li>
+    </ol>
+</p>
+<p>Add your code to this view.</p>
+<hr />
 
-    <!-- Your code here -->
-    <!--need to do inner join-->
-
-    <table id="employees" cellpadding="0" cellspacing="0">
+<!-- Your code here -->
+<!--need to do inner join-->
+<table class="table" id="employees" cellpadding="0" cellspacing="0">
+    <tr>
+        <th scope="col">Row No.</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Office Name</th>
+        <th scope="col">Position</th>
+    </tr>
+    @{int i = 0; }
+    @foreach (PartTwoBModel item in Model)
+    {
+        ++i;
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Office Name</th>
-            <th>Position</th>
+            <th scope="row">@i</th>
+            <td>@item.firstName</td>
+            <td>@item.lastName</td>
+            <td>@item.officeName</td>
+            <td>@item.position</td>
         </tr>
-        @foreach (PartTwoBModel item in Model)
-        {
-            <tr>
-                <td>@item.firstName</td>
-                <td>@item.lastName</td>
-                <td>@item.officeName</td>
-                <td>@item.position</td>
-            </tr>
-        }
-    </table>
-    <input type="button" id="view" value="View Employees" onclick="location.href='@Url.Action("PartTwoB", "TestController")'"/>@*<input type="button" id="view" value="View Employees"/>*@<input type="button" id="previous" value="<"><input type="button" id="next" value=">"/>
+    }
+</table>
 </div>
+
+@*<div class="container">
+    <div class="row">
+        <div class="col">
+            First Name
+        </div>
+        <div class="col">
+            Last Name
+        </div>
+        <div class="col">
+            Office Name
+        </div>
+        <div class="col">
+            Position
+        </div>
+    </div>
+    @foreach (PartTwoBModel item in Model)
+    {
+        <div class="row">
+            <div class="col">
+                @item.firstName
+            </div>
+            <div class="col">
+                @item.lastName
+            </div>
+            <div class="col">
+                @item.officeName
+            </div>
+            <div class="col">
+                @item.position
+            </div>
+        </div>
+    }
+</div>*@
+
+<input type="button" id="view" value="View Employees" onclick="location.href='@Url.Action("PartTwoB", "TestController")'" />
+@*<input type="button" id="view" value="View Employees"/>*@
+<input type="button" id="previous" value="<">
+<input type="button" id="next" value=">" />
