@@ -49,41 +49,6 @@
 </table>
 </div>
 
-@*<div class="container">
-    <div class="row">
-        <div class="col">
-            First Name
-        </div>
-        <div class="col">
-            Last Name
-        </div>
-        <div class="col">
-            Office Name
-        </div>
-        <div class="col">
-            Position
-        </div>
-    </div>
-    @foreach (PartTwoBModel item in Model)
-    {
-        <div class="row">
-            <div class="col">
-                @item.firstName
-            </div>
-            <div class="col">
-                @item.lastName
-            </div>
-            <div class="col">
-                @item.officeName
-            </div>
-            <div class="col">
-                @item.position
-            </div>
-        </div>
-    }
-</div>*@
-
-<input type="button" id="view" value="View Employees" onclick="location.href='@Url.Action("PartTwoB", "TestController")'" />
 @*<input type="button" id="view" value="View Employees"/>*@
-<input type="button" id="previous" value="<">
-<input type="button" id="next" value=">" />
+<input type="button" name ="previous" id="previous" value="<" onclick="location.href='@Url.Action("PreviousPage", "Test")'">
+<input type="button" id="next" value=">" onclick="location.href='@Url.Action("NextPage", "Test")'"/>

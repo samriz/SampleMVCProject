@@ -51,8 +51,6 @@ namespace InterviewTest.Controllers
         [HttpGet]
         public async Task<ActionResult> PartTwoB()
         {
-            //ActionResult ar = await UsingLINQAsync();
-            //return ar;
             List<PartTwoBModel> p2bList = await SolvePartTwoBWithLINQAsync();
             return View(p2bList);
         }

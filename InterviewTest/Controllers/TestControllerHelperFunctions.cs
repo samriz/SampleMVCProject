@@ -14,7 +14,60 @@ namespace InterviewTest.Controllers
 {
     public partial class TestController : Controller
     {
-        //public async Task<ActionResult> UsingLINQAsync()
+        private static readonly int recordsPerPage = 100;
+        private int pageNumber = 1;
+        private double overallNumberOfRowsInTable;
+        private int numberOfPages;
+
+        public async Task<ActionResult> NextPage() 
+        {
+            ActionResult ar;
+            if (pageNumber < numberOfPages) 
+            { 
+                ++pageNumber; 
+                ar = await PartTwoB();
+                return ar;
+            }
+            else
+            {
+                ar = await PartTwoB();
+                return ar;
+            }
+            /*List<PartTwoBModel> p2bList = await SolvePartTwoBWithLINQAsync(pageNumber);
+            return View(p2bList);*/         
+        }
+
+        public async Task<ActionResult> PreviousPage() 
+        {
+            ActionResult ar;
+            if (pageNumber > 0)
+            {
+                --pageNumber;
+                ar = await PartTwoB();
+                return ar;
+            }
+            else 
+            {
+                ar = await PartTwoB();
+                return ar;
+            }
+            /*List<PartTwoBModel> p2bList = await SolvePartTwoBWithLINQAsync(pageNumber);
+            return View(p2bList);*/
+        }
+
+        //returns maximum number of pages allowed in table based on number of rows in each page
+        public void SetNumberOfPages()
+        {
+            double n = overallNumberOfRowsInTable / recordsPerPage;
+            int maxNumberOfPages = 0;
+            if (overallNumberOfRowsInTable % recordsPerPage > 0)
+            {
+                maxNumberOfPages = (int)n;
+                ++maxNumberOfPages;
+            }
+            numberOfPages = maxNumberOfPages;
+        }
+
         public async Task<List<PartTwoBModel>> SolvePartTwoBWithLINQAsync()
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
@@ -39,15 +92,14 @@ namespace InterviewTest.Controllers
                         position.position
                     };
 
-                double numberOfRowsInTable = employeesAndTheirOfficesAndPositions.Count();
-                double recordsPerPage = 100.0;
-                double numberOfPages = numberOfRowsInTable / recordsPerPage;
+                overallNumberOfRowsInTable = employeesAndTheirOfficesAndPositions.Count();
+                SetNumberOfPages();
 
-                //user pagination here
-                Paginate(employeesAndTheirOfficesAndPositions);
+                //use pagination here
+                var q = Paginate(employeesAndTheirOfficesAndPositions, pageNumber);
 
                 //convert LINQ query IEnumerable to a List and iterate over it
-                foreach(var item in employeesAndTheirOfficesAndPositions.ToList())
+                foreach(var item in q.ToList())
                 {
                     //add new object to p2bList and assign each object properties to that of employeesAndTheirOfficesAndPositions
                     p2bList.Add(new PartTwoBModel() 
@@ -64,12 +116,16 @@ namespace InterviewTest.Controllers
             //return View(p2bList);
         }
 
-        private void Paginate(IEnumerable<dynamic> queryList, int offset = 100)
+        private IEnumerable<dynamic> Paginate(IEnumerable<dynamic> queryList, int pageNumber)
         {
-           // from item in queryList orderby item.firstName 
+            var lastNameContraintQuery = from item in queryList orderby item.lastName select item;
+
+            //page 1: 1-100
+            //page 2: 101-200
+            //page 3: 201-300
+            var page = lastNameContraintQuery.Skip((pageNumber*recordsPerPage)-100).Take(recordsPerPage);
+            return page;
         }
-
-
 
         public async Task<ActionResult> SolvePartTwoBWithoutLINQAsync()
         {
