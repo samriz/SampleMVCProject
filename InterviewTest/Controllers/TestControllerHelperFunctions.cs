@@ -19,12 +19,13 @@ namespace InterviewTest.Controllers
         private double overallNumberOfRowsInTable;
         private int numberOfPages;
 
-        public async Task<ActionResult> NextPage() 
+
+        public async Task<ActionResult> NextPage()
         {
             ActionResult ar;
-            if (pageNumber < numberOfPages) 
-            { 
-                ++pageNumber; 
+            if (pageNumber < numberOfPages)
+            {
+                ++pageNumber;
                 ar = await PartTwoB();
                 return ar;
             }
@@ -33,11 +34,9 @@ namespace InterviewTest.Controllers
                 ar = await PartTwoB();
                 return ar;
             }
-            /*List<PartTwoBModel> p2bList = await SolvePartTwoBWithLINQAsync(pageNumber);
-            return View(p2bList);*/         
         }
 
-        public async Task<ActionResult> PreviousPage() 
+        public async Task<ActionResult> PreviousPage()
         {
             ActionResult ar;
             if (pageNumber > 0)
@@ -46,14 +45,36 @@ namespace InterviewTest.Controllers
                 ar = await PartTwoB();
                 return ar;
             }
-            else 
+            else
             {
                 ar = await PartTwoB();
                 return ar;
             }
-            /*List<PartTwoBModel> p2bList = await SolvePartTwoBWithLINQAsync(pageNumber);
-            return View(p2bList);*/
         }
+
+        //public void NextPage() 
+        //{
+        //    if (pageNumber < numberOfPages) 
+        //    { 
+        //        ++pageNumber; 
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }    
+        //}
+
+        //public void PreviousPage() 
+        //{
+        //    if (pageNumber > 0)
+        //    {
+        //        --pageNumber;
+        //    }
+        //    else 
+        //    {
+        //        return;
+        //    }
+        //}
 
         //returns maximum number of pages allowed in table based on number of rows in each page
         public void SetNumberOfPages()
@@ -113,7 +134,6 @@ namespace InterviewTest.Controllers
             });
             await execute;
             return p2bList;
-            //return View(p2bList);
         }
 
         private IEnumerable<dynamic> Paginate(IEnumerable<dynamic> queryList, int pageNumber)

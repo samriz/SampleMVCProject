@@ -43,14 +43,9 @@ namespace InterviewTest.Controllers
 
         public ActionResult PartTwoA() {return View();}
 
-        //public ActionResult PartTwoB()
-        //{
-        //    return View();
-        //}
-
         [HttpGet]
         public async Task<ActionResult> PartTwoB()
-        {
+        {         
             List<PartTwoBModel> p2bList = await SolvePartTwoBWithLINQAsync();
             return View(p2bList);
         }
