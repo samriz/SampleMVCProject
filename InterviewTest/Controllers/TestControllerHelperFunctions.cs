@@ -19,63 +19,6 @@ namespace InterviewTest.Controllers
         private double overallNumberOfRowsInTable;
         private int numberOfPages;
 
-
-        public async Task<ActionResult> NextPage()
-        {
-            ActionResult ar;
-            if (pageNumber < numberOfPages)
-            {
-                ++pageNumber;
-                ar = await PartTwoB();
-                return ar;
-            }
-            else
-            {
-                ar = await PartTwoB();
-                return ar;
-            }
-        }
-
-        public async Task<ActionResult> PreviousPage()
-        {
-            ActionResult ar;
-            if (pageNumber > 0)
-            {
-                --pageNumber;
-                ar = await PartTwoB();
-                return ar;
-            }
-            else
-            {
-                ar = await PartTwoB();
-                return ar;
-            }
-        }
-
-        //public void NextPage() 
-        //{
-        //    if (pageNumber < numberOfPages) 
-        //    { 
-        //        ++pageNumber; 
-        //    }
-        //    else
-        //    {
-        //        return;
-        //    }    
-        //}
-
-        //public void PreviousPage() 
-        //{
-        //    if (pageNumber > 0)
-        //    {
-        //        --pageNumber;
-        //    }
-        //    else 
-        //    {
-        //        return;
-        //    }
-        //}
-
         //returns maximum number of pages allowed in table based on number of rows in each page
         public void SetNumberOfPages()
         {
@@ -138,12 +81,12 @@ namespace InterviewTest.Controllers
 
         private IEnumerable<dynamic> Paginate(IEnumerable<dynamic> queryList, int pageNumber)
         {
-            var lastNameContraintQuery = from item in queryList orderby item.lastName select item;
+            var lastNameConstraintQuery = from item in queryList orderby item.lastName select item;
 
             //page 1: 1-100
             //page 2: 101-200
             //page 3: 201-300
-            var page = lastNameContraintQuery.Skip((pageNumber*recordsPerPage)-100).Take(recordsPerPage);
+            var page = lastNameConstraintQuery.Skip((pageNumber*recordsPerPage)-100).Take(recordsPerPage);
             return page;
         }
 
