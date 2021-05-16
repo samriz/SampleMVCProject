@@ -183,10 +183,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\InterviewTestEntities.Designer.cs">
+    <Compile Include="Models\MVC_Sample_Entities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
+      <DependentUpon>MVC_Sample_Entities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Office.cs">
       <DependentUpon>InterviewTestEntities.tt</DependentUpon>
@@ -213,22 +213,22 @@
     <Content Include="InnerJoins.sql" />
     <Content Include="Models\InterviewTestEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
+      <DependentUpon>MVC_Sample_Entities.edmx</DependentUpon>
       <LastGenOutput>InterviewTestEntities.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\InterviewTestEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
+      <DependentUpon>MVC_Sample_Entities.edmx</DependentUpon>
       <LastGenOutput>InterviewTestEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\InterviewTestEntities.edmx">
+    <EntityDeploy Include="Models\MVC_Sample_Entities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>InterviewTestEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>MVC_Sample_Entities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\InterviewTestEntities.edmx.diagram">
-      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
+    <Content Include="Models\MVC_Sample_Entities.edmx.diagram">
+      <DependentUpon>MVC_Sample_Entities.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -257,8 +257,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\PartTwoA.cshtml" />
-    <Content Include="Views\Test\PartOne.cshtml" />
-    <Content Include="Views\Test\PartTwoB.cshtml" />
+    <Content Include="Views\Test\FormPage.cshtml" />
+    <Content Include="Views\Test\PaginationPage.cshtml" />
     <Content Include="Views\Test\PartThree.cshtml" />
     <Content Include="Views\Test\PartThreeError.cshtml" />
   </ItemGroup>

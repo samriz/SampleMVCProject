@@ -14,24 +14,6 @@ namespace InterviewTest.Controllers
 {
     public partial class TestController : Controller
     {
-        private static readonly int recordsPerPage = 100;
-        private int pageNumber = 1;
-        private double overallNumberOfRowsInTable;
-        private int numberOfPages;
-
-        //returns maximum number of pages allowed in table based on number of rows in each page
-        public void SetNumberOfPages()
-        {
-            double n = overallNumberOfRowsInTable / recordsPerPage;
-            int maxNumberOfPages = 0;
-            if (overallNumberOfRowsInTable % recordsPerPage > 0)
-            {
-                maxNumberOfPages = (int)n;
-                ++maxNumberOfPages;
-            }
-            numberOfPages = maxNumberOfPages;
-        }
-
         public async Task<List<PartTwoBModel>> SolvePartTwoBWithLINQAsync()
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
@@ -56,11 +38,12 @@ namespace InterviewTest.Controllers
                         position.position
                     };
 
-                overallNumberOfRowsInTable = employeesAndTheirOfficesAndPositions.Count();
-                SetNumberOfPages();
+                //overallNumberOfRowsInTable = employeesAndTheirOfficesAndPositions.Count();
+                Pagination p = new Pagination(employeesAndTheirOfficesAndPositions.Count(), 100);
+                p.SetNumberOfPages();
 
                 //use pagination here
-                var q = Paginate(employeesAndTheirOfficesAndPositions, pageNumber);
+                var q = p.Paginate(employeesAndTheirOfficesAndPositions, 1);
 
                 //convert LINQ query IEnumerable to a List and iterate over it
                 foreach(var item in q.ToList())
@@ -77,17 +60,6 @@ namespace InterviewTest.Controllers
             });
             await execute;
             return p2bList;
-        }
-
-        private IEnumerable<dynamic> Paginate(IEnumerable<dynamic> queryList, int pageNumber)
-        {
-            var lastNameConstraintQuery = from item in queryList orderby item.lastName select item;
-
-            //page 1: 1-100
-            //page 2: 101-200
-            //page 3: 201-300
-            var page = lastNameConstraintQuery.Skip((pageNumber*recordsPerPage)-100).Take(recordsPerPage);
-            return page;
         }
 
         public async Task<ActionResult> SolvePartTwoBWithoutLINQAsync()

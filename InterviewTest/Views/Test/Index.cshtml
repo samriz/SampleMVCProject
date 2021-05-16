@@ -2,9 +2,9 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="row">
-    <h1>Welcome</h1>
-    <p>This test requires Visual Studio 2015+ with LocalDB. Click the Setup button if you need further instruction.</p>
+@*<div class="row">*@
+<h1>Welcome</h1>
+    @*<p>This test requires Visual Studio 2015+ with LocalDB. Click the Setup button if you need further instruction.</p>
     <p>
         <a id="setup-btn" class="btn btn-default" href="javascript:void(0);">Setup &darr;</a>
         <ul id="setup" style="display: none;">
@@ -19,54 +19,63 @@
             </li>
             <li>You are ready to begin the test!</li>
         </ul>
-    </p>
+    </p>*@
     <div class="panel-group">
         <div class="panel panel-default">
-            <div class="panel-heading"><h2>Part I</h2></div>
+            @*<div class="panel-heading"><h2>Part I</h2></div>*@
             <div class="panel-body">
-                <p>Creating a contact form with validation</p>
-                <p><a class="btn btn-default" href="@Url.Action("PartOne", "Test")">Go &raquo;</a></p>
+                <p>Contact form with client-side and server-side validation.</p>
+                <p><a class="btn btn-default" href="@Url.Action("FormPage", "Test")">Go &raquo;</a></p>
             </div>
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading"><h2>Part II</h2></div>
-            <div class="panel-body">
-                <p>Choose one of the following:</p>
-                <div class="col-md-5">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <p>Using a js library to output data</p>
-                            <p><a class="btn btn-default" href="@Url.Action("PartTwoA", "Test")">Go &raquo;</a></p>
-                        </li>
-                        <li class="list-group-item">
-                            <p>Data filtering</p>
-                            <p><a class="btn btn-default" href="@Url.Action("PartTwoB", "Test")">Go &raquo;</a></p>
-                        </li>
-                    </ul>
-                </div>
+            @*<div class="panel-heading"><h2>Part II</h2></div>
+        <div class="panel-body">
+            <p>Choose one of the following:</p>
+            <div class="col-md-5">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <p>Using a js library to output data</p>
+                        <p><a class="btn btn-default" href="@Url.Action("PartTwoA", "Test")">Go &raquo;</a></p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Server-side pagination and data filtering</p>
+                        <p><a class="btn btn-default" href="@Url.Action("PartTwoB", "Test")">Go &raquo;</a></p>
+                    </li>
+                </ul>
             </div>
-        </div>
+        </div>*@
+            <div class="panel-body">
+                <p>Server-side pagination and data filtering.</p>
+                <p><a class="btn btn-default" href="@Url.Action("PaginationPage", "Test")">Go &raquo;</a></p>
+            </div>
 
-        <div class="panel panel-default">
+            @*<div class="panel panel-default">
             <div class="panel-heading"><h2>Part III</h2></div>
             <div class="panel-body">
                 <p>Resolving a server error.</p>
                 <p><a class="btn btn-default" href="@Url.Action("PartThree", "Test")">Go &raquo;</a></p>
             </div>
+        </div>*@
         </div>
-    </div>
 </div>
 
-@section scripts {
+@section scripts 
+{
     <script>
-        $(document).ready(function () {
-            $('#setup-btn').click(function () {
-                $('#setup').toggle(function () {
-                    if ($(this).is(':hidden')) {
+        $(document).ready(function ()
+        {
+            $('#setup-btn').click(function ()
+            {
+                $('#setup').toggle(function ()
+                {
+                    if ($(this).is(':hidden'))
+                    {
                         $('#setup-btn').html("Setup &darr;");
                     }
-                    else {
+                    else
+                    {
                         $('#setup-btn').html("Setup &uarr;");
                     }
                 });

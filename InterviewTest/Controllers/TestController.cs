@@ -16,11 +16,11 @@ namespace InterviewTest.Controllers
     {
         public ActionResult Index(){return View();}
 
-        public ActionResult PartOne(){return View();}
+        public ActionResult FormPage(){return View();}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PartOne(Applicant applicant)
+        public async Task<ActionResult> FormPage(Applicant applicant)
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             var applicants = interviewTestEntities.Applicants;
@@ -43,8 +43,8 @@ namespace InterviewTest.Controllers
 
         public ActionResult PartTwoA() {return View();}
 
-        [HttpGet]
-        public async Task<ActionResult> PartTwoB()
+        //[HttpGet]
+        public async Task<ActionResult> PaginationPage()
         {         
             List<PartTwoBModel> p2bList = await SolvePartTwoBWithLINQAsync();
             return View(p2bList);

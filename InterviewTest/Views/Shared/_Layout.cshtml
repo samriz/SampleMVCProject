@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Test</title>
+    <title>ASP.NET and MVC Showcase</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -16,14 +16,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Interview Test", "Index", "Test", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Sample", "Index", "Test", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Part I", "PartOne", "Test")</li>
-                    <li>@Html.ActionLink("Part II A", "PartTwoA", "Test")</li>
-                    <li>@Html.ActionLink("Part II B", "PartTwoB", "Test")</li>
-                    <li>@Html.ActionLink("Part III", "PartThree", "Test")</li>
+                    <li>@Html.ActionLink("Applicant Form", "FormPage", "Test")</li>
+                    @*<li>@Html.ActionLink("Part II A", "PartTwoA", "Test")</li>*@
+                    <li>@Html.ActionLink("Pagination", "PaginationPage", "Test")</li>
+                    @*<li>@Html.ActionLink("Part III", "PartThree", "Test")</li>*@
                 </ul>
             </div>
         </div>
