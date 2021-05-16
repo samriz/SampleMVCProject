@@ -1,6 +1,6 @@
 ﻿@*@model Tuple<IEnumerable<Employee>,IEnumerable<Office>,IEnumerable<Position>>*@
 @*@model IEnumerable<dynamic>*@
-@model List<PartTwoBModel>
+@model List<PaginationModel>
 @{
     ViewBag.Title = "Part II B";
 }
@@ -41,7 +41,7 @@
         <th scope="col">Position</th>
     </tr>
     @{int i = 0; }
-    @foreach (PartTwoBModel item in Model)
+    @foreach (var item in Model)
     {
         ++i;
         <tr>

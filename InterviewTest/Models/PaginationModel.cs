@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace InterviewTest.Models
+namespace MVC_Sample.Models
 {
-    public class PartTwoBModel
+    public class PaginationModel
     {
         public string firstName { get; set; }
         public string lastName { get; set; }

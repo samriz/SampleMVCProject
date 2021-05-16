@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InterviewTest.Models
+namespace MVC_Sample.Models
 {
     using System;
     using System.Data.Entity;

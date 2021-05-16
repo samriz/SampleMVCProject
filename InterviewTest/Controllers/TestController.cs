@@ -1,4 +1,4 @@
-﻿using InterviewTest.Models;
+﻿using MVC_Sample.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace InterviewTest.Controllers
+namespace MVC_Sample.Controllers
 {
     public partial class TestController : Controller
     {
@@ -46,7 +46,7 @@ namespace InterviewTest.Controllers
         //[HttpGet]
         public async Task<ActionResult> PaginationPage()
         {         
-            List<PartTwoBModel> p2bList = await SolvePartTwoBWithLINQAsync();
+            List<PaginationModel> p2bList = await SolvePartTwoBWithLINQAsync();
             return View(p2bList);
         }
 

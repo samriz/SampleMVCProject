@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace InterviewTest
+namespace MVC_Sample
 {
     public class BundleConfig
     {

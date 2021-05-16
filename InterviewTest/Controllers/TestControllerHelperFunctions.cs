@@ -1,4 +1,4 @@
-﻿using InterviewTest.Models;
+﻿using MVC_Sample.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace InterviewTest.Controllers
+namespace MVC_Sample.Controllers
 {
     public partial class TestController : Controller
     {
-        public async Task<List<PartTwoBModel>> SolvePartTwoBWithLINQAsync()
+        public async Task<List<PaginationModel>> SolvePartTwoBWithLINQAsync()
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             IEnumerable<Employee> employees = interviewTestEntities.Employees;
             IEnumerable<Office> offices = interviewTestEntities.Offices;
             IEnumerable<Position> positions = interviewTestEntities.Positions;
             
-            List<PartTwoBModel> p2bList = new List<PartTwoBModel>();
+            List<PaginationModel> p2bList = new List<PaginationModel>();
 
             Task execute = Task.Run(() =>
             {
@@ -49,7 +49,7 @@ namespace InterviewTest.Controllers
                 foreach(var item in q.ToList())
                 {
                     //add new object to p2bList and assign each object properties to that of employeesAndTheirOfficesAndPositions
-                    p2bList.Add(new PartTwoBModel() 
+                    p2bList.Add(new PaginationModel() 
                     {
                         firstName = item.firstName,
                         lastName = item.lastName,

@@ -183,15 +183,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MVC_Sample_Entities.Designer.cs">
+    <Compile Include="Models\InterviewTestEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MVC_Sample_Entities.edmx</DependentUpon>
+      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Office.cs">
       <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PartTwoBModel.cs" />
+    <Compile Include="Models\PaginationModel.cs" />
     <Compile Include="Models\Position.cs">
       <DependentUpon>InterviewTestEntities.tt</DependentUpon>
     </Compile>
@@ -213,22 +213,22 @@
     <Content Include="InnerJoins.sql" />
     <Content Include="Models\InterviewTestEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MVC_Sample_Entities.edmx</DependentUpon>
+      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
       <LastGenOutput>InterviewTestEntities.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\InterviewTestEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MVC_Sample_Entities.edmx</DependentUpon>
+      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
       <LastGenOutput>InterviewTestEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\MVC_Sample_Entities.edmx">
+    <EntityDeploy Include="Models\InterviewTestEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MVC_Sample_Entities.Designer.cs</LastGenOutput>
+      <LastGenOutput>InterviewTestEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\MVC_Sample_Entities.edmx.diagram">
-      <DependentUpon>MVC_Sample_Entities.edmx</DependentUpon>
+    <Content Include="Models\InterviewTestEntities.edmx.diagram">
+      <DependentUpon>InterviewTestEntities.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
