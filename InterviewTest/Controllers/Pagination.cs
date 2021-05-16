@@ -8,12 +8,22 @@ namespace MVC_Sample.Controllers
     public class Pagination
     {
         private readonly int recordsPerPage;
-        //private int pageNumber = 1;
+        private int pageNumber;
         private double overallNumberOfRowsInTable;
         private int numberOfPages;
+        IEnumerable<dynamic> queryList;
+
+        public Pagination(IEnumerable<dynamic> queryList, int overallNumberOfRowsInTable, int recordsPerPage)
+        {
+            this.queryList = queryList;
+            this.pageNumber = 1;
+            this.overallNumberOfRowsInTable = overallNumberOfRowsInTable;
+            this.recordsPerPage = recordsPerPage;
+        }
 
         public Pagination(int overallNumberOfRowsInTable, int recordsPerPage)
         {
+            this.pageNumber = 1;
             this.overallNumberOfRowsInTable = overallNumberOfRowsInTable;
             this.recordsPerPage = recordsPerPage;
         }
@@ -42,6 +52,16 @@ namespace MVC_Sample.Controllers
             }
             numberOfPages = nPages;
         }
+        public IEnumerable<dynamic> Paginate(int pageNumber)
+        {
+            var lastNameConstraintQuery = from item in this.queryList orderby item.lastName select item;
+
+            //page 1: 1-100
+            //page 2: 101-200
+            //page 3: 201-300
+            var page = lastNameConstraintQuery.Skip((pageNumber * recordsPerPage) - 100).Take(recordsPerPage);
+            return page;
+        }
         public IEnumerable<dynamic> Paginate(IEnumerable<dynamic> queryList, int pageNumber)
         {
             var lastNameConstraintQuery = from item in queryList orderby item.lastName select item;
@@ -51,6 +71,19 @@ namespace MVC_Sample.Controllers
             //page 3: 201-300
             var page = lastNameConstraintQuery.Skip((pageNumber * recordsPerPage) - 100).Take(recordsPerPage);
             return page;
+        }
+        public void IncrementPage() 
+        {
+            if(!(pageNumber > numberOfPages))
+            {
+                ++pageNumber;
+            }
+            else return;
+        }
+        public void DecrementPage()
+        {
+            if (!(pageNumber < 1)) --pageNumber;
+            else return;
         }
     }
 }

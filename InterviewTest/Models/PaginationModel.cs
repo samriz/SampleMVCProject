@@ -7,9 +7,6 @@ namespace MVC_Sample.Models
 {
     public class PaginationModel
     {
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string officeName { get; set; }
-        public string position { get; set; }
+        public List<EmployeeViewModel> Employees { get; set; }
     }
 }

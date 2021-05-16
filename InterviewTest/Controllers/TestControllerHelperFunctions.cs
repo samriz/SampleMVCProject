@@ -14,14 +14,14 @@ namespace MVC_Sample.Controllers
 {
     public partial class TestController : Controller
     {
-        public async Task<List<PaginationModel>> SolvePartTwoBWithLINQAsync()
+        public async Task<List<EmployeeViewModel>> PaginationAsync()
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             IEnumerable<Employee> employees = interviewTestEntities.Employees;
             IEnumerable<Office> offices = interviewTestEntities.Offices;
             IEnumerable<Position> positions = interviewTestEntities.Positions;
             
-            List<PaginationModel> p2bList = new List<PaginationModel>();
+            List<EmployeeViewModel> paginateList = new List<EmployeeViewModel>();
 
             Task execute = Task.Run(() =>
             {
@@ -38,7 +38,6 @@ namespace MVC_Sample.Controllers
                         position.position
                     };
 
-                //overallNumberOfRowsInTable = employeesAndTheirOfficesAndPositions.Count();
                 Pagination p = new Pagination(employeesAndTheirOfficesAndPositions.Count(), 100);
                 p.SetNumberOfPages();
 
@@ -49,7 +48,7 @@ namespace MVC_Sample.Controllers
                 foreach(var item in q.ToList())
                 {
                     //add new object to p2bList and assign each object properties to that of employeesAndTheirOfficesAndPositions
-                    p2bList.Add(new PaginationModel() 
+                    paginateList.Add(new EmployeeViewModel() 
                     {
                         firstName = item.firstName,
                         lastName = item.lastName,
@@ -59,10 +58,10 @@ namespace MVC_Sample.Controllers
                 }
             });
             await execute;
-            return p2bList;
+            return paginateList;
         }
 
-        public async Task<ActionResult> SolvePartTwoBWithoutLINQAsync()
+        public async Task<ActionResult> PaginateWithoutLINQAsync()
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
             IEnumerable<Employee> employees = interviewTestEntities.Employees;

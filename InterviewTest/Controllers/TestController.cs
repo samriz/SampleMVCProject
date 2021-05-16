@@ -14,10 +14,6 @@ namespace MVC_Sample.Controllers
 {
     public partial class TestController : Controller
     {
-        public ActionResult Index(){return View();}
-
-        public ActionResult FormPage(){return View();}
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> FormPage(Applicant applicant)
@@ -40,16 +36,24 @@ namespace MVC_Sample.Controllers
             await applicantAdder;
             return View();
         }
-
-        public ActionResult PartTwoA() {return View();}
-
-        //[HttpGet]
         public async Task<ActionResult> PaginationPage()
-        {         
-            List<PaginationModel> p2bList = await SolvePartTwoBWithLINQAsync();
-            return View(p2bList);
+        {
+            PaginationModel paginationModel = new PaginationModel
+            {
+                Employees = await PaginationAsync()
+            };
+            return View(paginationModel);
         }
 
+
+
+
+
+
+
+        public ActionResult Index() { return View(); }
+        public ActionResult FormPage() { return View(); }
+        public ActionResult PartTwoA() { return View(); }
         [HandleError(View = "PartThreeError")]
         public ActionResult PartThree()
         {
