@@ -40,17 +40,11 @@ namespace MVC_Sample.Controllers
         {
             PaginationModel paginationModel = new PaginationModel
             {
+                //Employee: first name, last name, office name, position
                 Employees = await PaginationAsync()
             };
             return View(paginationModel);
         }
-
-
-
-
-
-
-
         public ActionResult Index() { return View(); }
         public ActionResult FormPage() { return View(); }
         public ActionResult PartTwoA() { return View(); }

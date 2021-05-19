@@ -72,12 +72,9 @@ namespace MVC_Sample.Controllers
             var page = lastNameConstraintQuery.Skip((pageNumber * recordsPerPage) - 100).Take(recordsPerPage);
             return page;
         }
-        public void IncrementPage() 
+        public void IncrementPage()
         {
-            if(!(pageNumber > numberOfPages))
-            {
-                ++pageNumber;
-            }
+            if (!(pageNumber > numberOfPages)) ++pageNumber;
             else return;
         }
         public void DecrementPage()
