@@ -1,4 +1,5 @@
 ﻿using MVC_Sample.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,18 +15,28 @@ namespace MVC_Sample.Controllers
 {
     public partial class TestController : Controller
     {
+        PaginationManager pm;
+        public TestController()
+        {
+            pm = new PaginationManager();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> FormPage(Applicant applicant)
         {
             InterviewTestEntities interviewTestEntities = new InterviewTestEntities();
+
             var applicants = interviewTestEntities.Applicants;
+
             if (!ModelState.IsValid) return View();
             
             Task applicantAdder = Task.Run(() =>
             {
+                //server-side validation
                 try
                 {
+                    //insert valid applicant into applicants collection i.e. "Applicant" table in DB
                     applicants.Add(applicant);
                 }
                 catch (DbEntityValidationException e)
@@ -36,14 +47,16 @@ namespace MVC_Sample.Controllers
             await applicantAdder;
             return View();
         }
+
+        [HttpGet]
         public async Task<ActionResult> PaginationPage()
         {
-            PaginationModel paginationModel = new PaginationModel
+            EmployeeViewModels evm = new EmployeeViewModels
             {
                 //Employee: first name, last name, office name, position
-                Employees = await PaginationAsync()
+                Employees = await pm.GetPaginateListAsync(1)
             };
-            return View(paginationModel);
+            return View(evm);
         }
         public ActionResult Index() { return View(); }
         public ActionResult FormPage() { return View(); }
@@ -53,6 +66,18 @@ namespace MVC_Sample.Controllers
         {
             List<City> cities = CityHelper.Populate();
             return View(cities);
+        }
+
+        [HttpPost]
+        public string GetPageList(int pageNumber)
+        {
+            EmployeeViewModels evm = new EmployeeViewModels
+            {
+                //Employee: first name, last name, office name, position
+                Employees = pm.GetPaginateList(pageNumber)
+            };
+            //return JsonConvert.SerializeObject(true.ToString());
+            return JsonConvert.SerializeObject(evm.Employees.ToArray());
         }
     }
 }

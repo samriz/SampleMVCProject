@@ -1,12 +1,21 @@
 ﻿@*@model Tuple<IEnumerable<Employee>,IEnumerable<Office>,IEnumerable<Position>>*@
 @*@model IEnumerable<dynamic>*@
 @*@model List<EmployeeViewModel>*@
-@model PaginationModel
+@model EmployeeViewModels
 @{
-    ViewBag.Title = "Pagination";
+    ViewBag.Title = "PaginationPage";
 }
 
+<style>
+    .disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+        opacity: 0.65;
+    }
+</style>
+
 <div class="row">
+    <input id="pageNumberHiddenField" name="pageNumberHiddenField" type="hidden" value="1" />
     <h1>Pagination</h1>
     <p>
         This page displays various joined fields from several different database tables.
@@ -28,19 +37,19 @@
             </ol>
         </p>
         <p>Add your code to this view.</p>*@
-    <hr/>
+    <hr />
 
     <!-- Your code here -->
     <!--need to do inner join-->
-    <table class="table" id="employees" cellpadding="0" cellspacing="0">
-        <tr>
+    <table id="employees" class="table" cellpadding="0" cellspacing="0">
+        <tr id="rowZero">
             <th scope="col">Row No.</th>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Office Name</th>
             <th scope="col">Position</th>
         </tr>
-        @{int i = 0; }
+        @*@{int i = 0; }
         @foreach (EmployeeViewModel employee in Model.Employees)
         {
             ++i;
@@ -51,23 +60,129 @@
                 <td>@employee.officeName</td>
                 <td>@employee.position</td>
             </tr>
-        }
+        }*@
     </table>
 </div>
 
-@*<input type="button" id="view" value="View Employees"/>*@
-@*<input type="button" name ="previous" id="previous" value="<" onclick="location.href='@Url.Action("PreviousPage", "Test")'">
-    <input type="button" id="next" value=">" onclick="location.href='@Url.Action("NextPage", "Test")'"/>*@
+<input type="hidden" id="pageNumberHiddenField" value="" />
 
-<input type="button" name="previous" id="previous" value="<" onclick="location.href=''">
-<input type="button" id="next" value=">" onclick="location.href=''"/>
+<button type="button" id="previous"> < </button>
+<button type="button" id="next"> > </button>
 
-@*<input type="button" onclick="NextPage()" value=">"/>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/Employee.js"></script>
+<script>
+    const defaultPageNumber = 1;
+    var currentPageNumber = 0;
+
+    function removeChildNodes(employeesTable)
+    {
+        if (employeesTable.hasChildNodes() && employeesTable.childElementCount > 1)
+        {
+            for (let i = 1; i < employeesTable.childElementCount; i++)
+            {
+                employeesTable.children[i].innerHTML = "";
+            }
+        }        
+        return true;
+    }
+
+    function GetPageList()
+    {
+        //console.log("in GetPageList().");
+        var Employees = new Array();
+        //var employeesTable = document.getElementById("employees");
+        var employeesTable = document.querySelector("#employees");
+
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action("GetPageList", "Test")",
+            data: JSON.stringify({ pageNumber: currentPageNumber }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response)
+            {
+                removeChildNodes(employeesTable);
+                console.log("response length: " + response.length);
+                //console.log("Employees: " + response);
+                for (let i = 0; i < response.length; i++)
+                {
+                    let employee = new Employee(response[i].firstName, response[i].lastName, response[i].officeName, response[i].position);
+                    let tableRow = document.createElement("tr");
+                    //<th scope="row">++i;</th>
+                    let td0 = document.createElement("th");
+                    td0.setAttribute("scope", "row");
+                    let td1 = document.createElement("td");
+                    let td2 = document.createElement("td");
+                    let td3 = document.createElement("td");
+                    let td4 = document.createElement("td");
+
+                    if (currentPageNumber === 1) td0.innerHTML = i + 1;
+                    else td0.innerHTML = (i + 1) + 100;
+                    td1.innerHTML = employee.firstName;
+                    td2.innerHTML = employee.lastName;
+                    td3.innerHTML = employee.officeName;
+                    td4.innerHTML = employee.position;
+
+                    tableRow.appendChild(td0);
+                    tableRow.appendChild(td1);
+                    tableRow.appendChild(td2);
+                    tableRow.appendChild(td3);
+                    tableRow.appendChild(td4);
+
+                    employeesTable.appendChild(tableRow);
+
+                }
+            },
+            error: function (errorMessage)
+            {
+                console.log("There was an error for some reason.");
+            }
+        });
+    }
+
+    function Initialize()
+    {
+        let previousButton = document.getElementById("previous");
+
+        //set initial page number
+        currentPageNumber = defaultPageNumber;
+
+        if (currentPageNumber === 1)
+        {
+            previousButton.disabled = true;
+            if (previousButton.classList.contains("disabled") === false) previousButton.classList.add("disabled");
+        }
+        GetPageList();
+        /*var hiddenFieldPageNumber = document.getElementById("pageNumberHiddenField").setAttribute("value", currentPageNumber);*/
+    }
 
     function NextPage()
     {
-        $.get("/Test/NextPage", function (data)
+        currentPageNumber = currentPageNumber + 1;
+        let previousButton = document.getElementById("previous");
+        if (currentPageNumber > 1)
         {
-            $("p").html(data);
-        });
-    }*@
+            previousButton.disabled = false;
+            if (previousButton.classList.contains("disabled")) previousButton.classList.remove("disabled");
+        }
+        GetPageList();
+    }
+
+    function PreviousPage()
+    {
+        currentPageNumber = currentPageNumber - 1;
+        let previousButton = document.getElementById("previous");
+        if (currentPageNumber < 2)
+        {
+            previousButton.disabled = true;
+            if (previousButton.classList.contains("disabled") === false) previousButton.classList.add("disabled");
+        }
+        GetPageList();
+    }
+
+    window.addEventListener("load", Initialize);
+    document.getElementById("next").addEventListener("click", NextPage);
+    document.getElementById("previous").addEventListener("click", PreviousPage);
+
+</script>

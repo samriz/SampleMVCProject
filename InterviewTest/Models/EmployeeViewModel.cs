@@ -12,4 +12,9 @@ namespace MVC_Sample.Models
         public string officeName { get; set; }
         public string position { get; set; }
     }
+    public class EmployeeViewModels
+    {
+        //Employee: first name, last name, office name, position
+        public List<EmployeeViewModel> Employees { get; set; }
+    }
 }
