@@ -22,27 +22,27 @@
         100 records are displayed on each page.
     </p>
     @*<h1>Part II B</h1>
-        <p>
-            There are over 1000 <i>[InterviewTest].[dbo].[Employee]</i> records in the database.
-            <ol>
-                <li>Output each employee's first name, last name, office name, and position name.</li>
-                <li>Implement server-side pagination of 100 records per page.</li>
-                <li>
-                    Add ability to filter by one of the following:
-                    <ul>
-                        <li>Part Time/Full Time</li>
-                        <li>Remote/On site</li>
-                    </ul>
-                </li>
-            </ol>
-        </p>
-        <p>Add your code to this view.</p>*@
-    <hr />
+            <p>
+                There are over 1000 <i>[InterviewTest].[dbo].[Employee]</i> records in the database.
+                <ol>
+                    <li>Output each employee's first name, last name, office name, and position name.</li>
+                    <li>Implement server-side pagination of 100 records per page.</li>
+                    <li>
+                        Add ability to filter by one of the following:
+                        <ul>
+                            <li>Part Time/Full Time</li>
+                            <li>Remote/On site</li>
+                        </ul>
+                    </li>
+                </ol>
+            </p>
+            <p>Add your code to this view.</p>
+        <hr/>*@
 
     <!-- Your code here -->
     <!--need to do inner join-->
     <table id="employees" class="table" cellpadding="0" cellspacing="0">
-        <tr id="rowZero">
+        <tr id="row_0">
             <th scope="col">Row No.</th>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
@@ -50,89 +50,91 @@
             <th scope="col">Position</th>
         </tr>
         @*@{int i = 0; }
-        @foreach (EmployeeViewModel employee in Model.Employees)
-        {
-            ++i;
-            <tr>
-                <th scope="row">@i</th>
-                <td>@employee.firstName</td>
-                <td>@employee.lastName</td>
-                <td>@employee.officeName</td>
-                <td>@employee.position</td>
-            </tr>
-        }*@
+            @foreach (EmployeeViewModel employee in Model.Employees)
+            {
+                ++i;
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@employee.firstName</td>
+                    <td>@employee.lastName</td>
+                    <td>@employee.officeName</td>
+                    <td>@employee.position</td>
+                </tr>
+            }*@
     </table>
 </div>
 
-<input type="hidden" id="pageNumberHiddenField" value="" />
+<input type="hidden" id="pageNumberHiddenField" value=""/>
 
-<button type="button" id="previous"> < </button>
-<button type="button" id="next"> > </button>
+<button type="button" id="previous" onclick="PreviousPage()"> < </button>
+<button type="button" id="next" onclick="NextPage()"> > </button>
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/Employee.js"></script>
 <script>
-    const defaultPageNumber = 1;
-    var currentPageNumber = 0;
 
-    function removeChildNodes(employeesTable)
+    const DefaultPageNumber = 1;
+    var CurrentPageNumber = 0;
+    var EmployeesList;
+
+    function GetDataAndCreateRows()
     {
-        if (employeesTable.hasChildNodes() && employeesTable.childElementCount > 1)
-        {
-            for (let i = 1; i < employeesTable.childElementCount; i++)
-            {
-                employeesTable.children[i].innerHTML = "";
-            }
-        }        
-        return true;
-    }
-
-    function GetPageList()
-    {
-        //console.log("in GetPageList().");
-        var Employees = new Array();
-        //var employeesTable = document.getElementById("employees");
-        var employeesTable = document.querySelector("#employees");
-
         $.ajax({
             method: "POST",
             url: "@Url.Action("GetPageList", "Test")",
-            data: JSON.stringify({ pageNumber: currentPageNumber }),
+            data: JSON.stringify({ pageNumber: CurrentPageNumber }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response)
             {
-                removeChildNodes(employeesTable);
                 console.log("response length: " + response.length);
-                //console.log("Employees: " + response);
-                for (let i = 0; i < response.length; i++)
+                if (response.length > 0)
                 {
-                    let employee = new Employee(response[i].firstName, response[i].lastName, response[i].officeName, response[i].position);
-                    let tableRow = document.createElement("tr");
-                    //<th scope="row">++i;</th>
-                    let td0 = document.createElement("th");
-                    td0.setAttribute("scope", "row");
-                    let td1 = document.createElement("td");
-                    let td2 = document.createElement("td");
-                    let td3 = document.createElement("td");
-                    let td4 = document.createElement("td");
+                    EmployeesList = response;
+                    // iterate through list of employees data
+                    for (let i = 0; i < response.length; i++)
+                    {
+                        let employee = new Employee(response[i].firstName, response[i].lastName, response[i].officeName, response[i].position);
 
-                    if (currentPageNumber === 1) td0.innerHTML = i + 1;
-                    else td0.innerHTML = (i + 1) + 100;
-                    td1.innerHTML = employee.firstName;
-                    td2.innerHTML = employee.lastName;
-                    td3.innerHTML = employee.officeName;
-                    td4.innerHTML = employee.position;
+                        // <th scope="row">++i;</th>
+                        let th = document.createElement("th");
+                        th.setAttribute("scope", "row");
+                        let td1 = document.createElement("td");
+                        let td2 = document.createElement("td");
+                        let td3 = document.createElement("td");
+                        let td4 = document.createElement("td");
 
-                    tableRow.appendChild(td0);
-                    tableRow.appendChild(td1);
-                    tableRow.appendChild(td2);
-                    tableRow.appendChild(td3);
-                    tableRow.appendChild(td4);
+                        let rowNumber;
 
-                    employeesTable.appendChild(tableRow);
+                        if (CurrentPageNumber === 1)
+                        {
+                            rowNumber = i + 1;
+                            th.innerHTML = rowNumber.toString();
+                        }
 
-                }
+                        let tableRow = document.createElement("tr");
+                        tableRow.id = "row_" + rowNumber.toString();
+                        th.id = "thRowNumber_" + rowNumber.toString();
+                        td1.id = "tdFirstName_" + rowNumber.toString();
+                        td2.id = "tdLastName_" + rowNumber.toString();
+                        td3.id = "tdOfficeName_" + rowNumber.toString();
+                        td4.id = "tdPosition_" + rowNumber.toString();
+
+                        td1.innerHTML = employee.firstName;
+                        td2.innerHTML = employee.lastName;
+                        td3.innerHTML = employee.officeName;
+                        td4.innerHTML = employee.position;
+
+                        tableRow.appendChild(th);
+                        tableRow.appendChild(td1);
+                        tableRow.appendChild(td2);
+                        tableRow.appendChild(td3);
+                        tableRow.appendChild(td4);
+
+                        var employeesTable = document.querySelector("#employees > tbody");
+                        employeesTable.appendChild(tableRow);
+                    }
+                }                
             },
             error: function (errorMessage)
             {
@@ -146,43 +148,155 @@
         let previousButton = document.getElementById("previous");
 
         //set initial page number
-        currentPageNumber = defaultPageNumber;
+        CurrentPageNumber = DefaultPageNumber;
 
-        if (currentPageNumber === 1)
+        if (CurrentPageNumber === 1)
         {
             previousButton.disabled = true;
             if (previousButton.classList.contains("disabled") === false) previousButton.classList.add("disabled");
         }
-        GetPageList();
-        /*var hiddenFieldPageNumber = document.getElementById("pageNumberHiddenField").setAttribute("value", currentPageNumber);*/
+        GetDataAndCreateRows();
+    }
+
+    window.addEventListener("load", Initialize);
+
+    // function to clear out rows
+    function clearRows(employeesTable)
+    {
+        // if the employees table has any rows and the number of rows is greater than 1 (the first row in the column headers)
+        if (employeesTable.hasChildNodes() && employeesTable.childElementCount > 1)
+        {
+            for (let i = 1; i < employeesTable.childElementCount; i++)
+            {
+                //except for row zero, empty out each row to make way for new page's data
+                if (employeesTable.children[i] != undefined || employeesTable.children[i] != null)
+                {
+                    if (employeesTable.children[i].innerHTML.length > 0) employeesTable.children[i].innerHTML = "";
+                }
+            }
+        }
+    }
+
+    // function to get data from db and populate the employees table with it
+    function GetPageList()
+    {
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action("GetPageList", "Test")",
+            data: JSON.stringify({ pageNumber: CurrentPageNumber }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response)
+            {
+                console.log("response length: " + response.length);
+                if (response.length > 0) {
+                    EmployeesList = response;
+                    // iterate through list of employees data
+                    for (let i = 0; i < response.length; i++) {
+                        let employee = new Employee(response[i].firstName, response[i].lastName, response[i].officeName, response[i].position);
+
+                        let rowNumber = i + 1;
+
+                        let th = document.getElementById("thRowNumber_" + rowNumber.toString());
+
+                        if (CurrentPageNumber === 1) th.innerHTML = rowNumber.toString();
+                        else {
+                            let thValue = rowNumber + (100 * (CurrentPageNumber - 1));
+                            th.innerHTML = thValue.toString();
+                        }
+
+                        let td1 = document.getElementById("tdFirstName_" + rowNumber.toString());
+                        let td2 = document.getElementById("tdLastName_" + rowNumber.toString());
+                        let td3 = document.getElementById("tdOfficeName_" + rowNumber.toString());
+                        let td4 = document.getElementById("tdPosition_" + rowNumber.toString());
+
+                        td1.innerHTML = employee.firstName;
+                        td2.innerHTML = employee.lastName;
+                        td3.innerHTML = employee.officeName;
+                        td4.innerHTML = employee.position;
+
+                        let rowId = "row_" + rowNumber.toString();
+                        let tableRow = document.getElementById(rowId);
+                        tableRow.appendChild(th);
+                        tableRow.appendChild(td1);
+                        tableRow.appendChild(td2);
+                        tableRow.appendChild(td3);
+                        tableRow.appendChild(td4);
+
+                        // clear out employees table
+                        var employeesTable = document.querySelector("#employees > tbody");
+                        employeesTable.appendChild(tableRow);
+                    }
+                }
+                else
+                {
+                    disableNext();
+                }
+            },
+            error: function (errorMessage)
+            {
+                console.log("There was an error for some reason.");
+            }
+        });
+    }
+
+    function enablePrevious()
+    {
+        let previousButton = document.getElementById("previous");
+        previousButton.disabled = false;
+        if (previousButton.classList.contains("disabled")) previousButton.classList.remove("disabled");
+    }
+
+    function disablePrevious()
+    {
+        let previousButton = document.getElementById("previous");
+        previousButton.disabled = true;
+        if (previousButton.classList.contains("disabled") === false) previousButton.classList.add("disabled");
+    }
+
+    function enableNext()
+    {
+        let nextButton = document.getElementById("next");
+        nextButton.disabled = false;
+        if (nextButton.classList.contains("disabled")) nextButton.classList.remove("disabled");
+    }
+
+    function disableNext()
+    {
+        let nextButton = document.getElementById("next");
+        nextButton.disabled = true;
+        if (nextButton.classList.contains("disabled") === false) nextButton.classList.add("disabled");
     }
 
     function NextPage()
     {
-        currentPageNumber = currentPageNumber + 1;
-        let previousButton = document.getElementById("previous");
-        if (currentPageNumber > 1)
+        if (EmployeesList != undefined || EmployeesList != null)
         {
-            previousButton.disabled = false;
-            if (previousButton.classList.contains("disabled")) previousButton.classList.remove("disabled");
+            if(EmployeesList.length > 0) CurrentPageNumber = CurrentPageNumber + 1;
+        }
+         
+        console.log("Current page number: " + CurrentPageNumber);
+        
+        if (CurrentPageNumber > 1)
+        {
+            enablePrevious();
         }
         GetPageList();
     }
 
     function PreviousPage()
     {
-        currentPageNumber = currentPageNumber - 1;
-        let previousButton = document.getElementById("previous");
-        if (currentPageNumber < 2)
+        CurrentPageNumber = CurrentPageNumber - 1;
+        console.log("Current page number: " + CurrentPageNumber);
+        
+        if (CurrentPageNumber < 2)
         {
-            previousButton.disabled = true;
-            if (previousButton.classList.contains("disabled") === false) previousButton.classList.add("disabled");
+            disablePrevious();
         }
         GetPageList();
     }
 
-    window.addEventListener("load", Initialize);
-    document.getElementById("next").addEventListener("click", NextPage);
-    document.getElementById("previous").addEventListener("click", PreviousPage);
+    //document.getElementById("next").addEventListener("click", NextPage);
+    //document.getElementById("previous").addEventListener("click", PreviousPage);
 
 </script>
