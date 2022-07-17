@@ -1,4 +1,4 @@
-﻿using InterviewTest.Classes;
+﻿using MVC_Sample.Classes;
 using MVC_Sample.Models;
 using System;
 using System.Collections.Generic;

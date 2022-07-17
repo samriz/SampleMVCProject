@@ -7,20 +7,27 @@
 }
 
 <style>
-    .disabled {
+    table{width: 100%;}
+    button{width: 35px;}
+    .tdPrevious{text-align: left;}
+    .tdNext {text-align: right;}
+    .tdCenter{text-align: center;}
+    .previous[disabled], .next[disabled] 
+    {
         pointer-events: none;
         cursor: not-allowed;
         opacity: 0.65;
     }
 </style>
 
-<div class="row">
-    <input id="pageNumberHiddenField" name="pageNumberHiddenField" type="hidden" value="1" />
-    <h1>Pagination</h1>
-    <p>
-        This page displays various joined fields from several different database tables.
-        100 records are displayed on each page.
-    </p>
+@*<div class="row">*@
+    <header>
+        <h1>Pagination</h1>
+        <p>
+            This page displays various joined fields from several different database tables.
+            100 records are displayed on each page.
+        </p>
+    </header>
     @*<h1>Part II B</h1>
             <p>
                 There are over 1000 <i>[InterviewTest].[dbo].[Employee]</i> records in the database.
@@ -41,6 +48,19 @@
 
     <!-- Your code here -->
     <!--need to do inner join-->
+    <table>
+        <tr>
+            <td class="tdPrevious">
+                <button type="button" class="previous"> < </button>
+            </td>
+            <td class="tdCenter">
+                <!--<input type="number" id="inputPageNumber"/>-->
+            </td>
+            <td class="tdNext">
+                <button type="button" class="next"> > </button>
+            </td>
+        </tr>
+    </table>
     <table id="employees" class="table" cellpadding="0" cellspacing="0">
         <tr id="row_0">
             <th scope="col">Row No.</th>
@@ -62,241 +82,293 @@
                 </tr>
             }*@
     </table>
-</div>
+    <div hidden><i>You've encountered an error.'</i></div>
+@*</div>*@
 
-<input type="hidden" id="pageNumberHiddenField" value=""/>
-
-<button type="button" id="previous" onclick="PreviousPage()"> < </button>
-<button type="button" id="next" onclick="NextPage()"> > </button>
+<table>
+    <tr>
+        <td class="tdPrevious">
+            <button type="button" class="previous"> < </button>
+        </td>
+        <td class="tdCenter">
+            <input type="number" id="inputPageNumber" style="width:40px" step="1"/><br/>
+            <span id="errorPageNumber" style="color:red" hidden>Invalid page number</span>
+        </td>
+        <td class="tdNext">
+            <button type="button" class="next"> > </button>
+        </td>
+    </tr>
+</table>
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/Employee.js"></script>
-<script>
+@*<script src="~/Scripts/helper.js"></script>*@
 
+<script>
     const DefaultPageNumber = 1;
     var CurrentPageNumber = 0;
-    var EmployeesList;
-
-    function GetDataAndCreateRows()
-    {
-        $.ajax({
-            method: "POST",
-            url: "@Url.Action("GetPageList", "Test")",
-            data: JSON.stringify({ pageNumber: CurrentPageNumber }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response)
-            {
-                console.log("response length: " + response.length);
-                if (response.length > 0)
-                {
-                    EmployeesList = response;
-                    // iterate through list of employees data
-                    for (let i = 0; i < response.length; i++)
-                    {
-                        let employee = new Employee(response[i].firstName, response[i].lastName, response[i].officeName, response[i].position);
-
-                        // <th scope="row">++i;</th>
-                        let th = document.createElement("th");
-                        th.setAttribute("scope", "row");
-                        let td1 = document.createElement("td");
-                        let td2 = document.createElement("td");
-                        let td3 = document.createElement("td");
-                        let td4 = document.createElement("td");
-
-                        let rowNumber;
-
-                        if (CurrentPageNumber === 1)
-                        {
-                            rowNumber = i + 1;
-                            th.innerHTML = rowNumber.toString();
-                        }
-
-                        let tableRow = document.createElement("tr");
-                        tableRow.id = "row_" + rowNumber.toString();
-                        th.id = "thRowNumber_" + rowNumber.toString();
-                        td1.id = "tdFirstName_" + rowNumber.toString();
-                        td2.id = "tdLastName_" + rowNumber.toString();
-                        td3.id = "tdOfficeName_" + rowNumber.toString();
-                        td4.id = "tdPosition_" + rowNumber.toString();
-
-                        td1.innerHTML = employee.firstName;
-                        td2.innerHTML = employee.lastName;
-                        td3.innerHTML = employee.officeName;
-                        td4.innerHTML = employee.position;
-
-                        tableRow.appendChild(th);
-                        tableRow.appendChild(td1);
-                        tableRow.appendChild(td2);
-                        tableRow.appendChild(td3);
-                        tableRow.appendChild(td4);
-
-                        var employeesTable = document.querySelector("#employees > tbody");
-                        employeesTable.appendChild(tableRow);
-                    }
-                }                
-            },
-            error: function (errorMessage)
-            {
-                console.log("There was an error for some reason.");
-            }
-        });
-    }
-
-    function Initialize()
-    {
-        let previousButton = document.getElementById("previous");
-
-        //set initial page number
-        CurrentPageNumber = DefaultPageNumber;
-
-        if (CurrentPageNumber === 1)
-        {
-            previousButton.disabled = true;
-            if (previousButton.classList.contains("disabled") === false) previousButton.classList.add("disabled");
-        }
-        GetDataAndCreateRows();
-    }
+    var totalNumberOfPages;
+    var EmployeesList = new Array();
 
     window.addEventListener("load", Initialize);
 
-    // function to clear out rows
-    function clearRows(employeesTable)
+    function Initialize()
     {
-        // if the employees table has any rows and the number of rows is greater than 1 (the first row in the column headers)
-        if (employeesTable.hasChildNodes() && employeesTable.childElementCount > 1)
+        //set initial page number
+        CurrentPageNumber = DefaultPageNumber;
+        document.getElementById("inputPageNumber").value = CurrentPageNumber;
+        document.getElementById("inputPageNumber").setAttribute("min", 1);
+        
+        for (let i = 0; i < previousButtons.length; i++)
         {
-            for (let i = 1; i < employeesTable.childElementCount; i++)
+            previousButtons[i].disabled = true;
+        }
+        console.log(`Current Page Number: ${CurrentPageNumber}`);
+        let arrEmployees = getAllEmployees();
+        totalNumberOfPages = arrEmployees.length / 100;
+        if ((arrEmployees.length % 100) > 0)
+        {
+            let roundedUpTotalNumberOfPages = (totalNumberOfPages - ((arrEmployees.length % 100)/100)) + 1;
+            totalNumberOfPages = roundedUpTotalNumberOfPages;
+        }
+        console.log(`Total Number of Pages: ${totalNumberOfPages}`);
+        document.getElementById("inputPageNumber").setAttribute("max", totalNumberOfPages);
+        buildPageRows(arrEmployees);
+        eventListeners();
+        EmployeesList = arrEmployees;
+    }
+
+    function buildPageRows(employees)
+    {
+        //let startIndex = (CurrentPageNumber * 100) - 99;
+        //for (let i = startIndex; i < startIndex + 100; i++)
+        for (let i = 1; i < 100; i++)
+        {
+            let employee = new Employee(employees[i].firstName, employees[i].lastName, employees[i].officeName, employees[i].position);
+
+            //create table elements
+            // <th scope="row">++i;</th>
+            let th = document.createElement("th");
+            th.setAttribute("scope", "row");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+            let td4 = document.createElement("td");
+
+            let rowNumber;
+
+            if (CurrentPageNumber === 1)
             {
-                //except for row zero, empty out each row to make way for new page's data
-                if (employeesTable.children[i] != undefined || employeesTable.children[i] != null)
-                {
-                    if (employeesTable.children[i].innerHTML.length > 0) employeesTable.children[i].innerHTML = "";
-                }
+                rowNumber = i;
+                th.innerHTML = rowNumber.toString();
             }
+
+            //set ids of newly created table elements
+            let tableRow = document.createElement("tr");
+            tableRow.id = "row_" + rowNumber.toString();
+            th.id = "thRowNumber_" + rowNumber.toString();
+            td1.id = "tdFirstName_" + rowNumber.toString();
+            td2.id = "tdLastName_" + rowNumber.toString();
+            td3.id = "tdOfficeName_" + rowNumber.toString();
+            td4.id = "tdPosition_" + rowNumber.toString();
+
+            td1.innerHTML = employee.firstName;
+            td2.innerHTML = employee.lastName;
+            td3.innerHTML = employee.officeName;
+            td4.innerHTML = employee.position;
+
+            tableRow.appendChild(th);
+            tableRow.appendChild(td1);
+            tableRow.appendChild(td2);
+            tableRow.appendChild(td3);
+            tableRow.appendChild(td4);
+
+            var employeesTable = document.querySelector("#employees > tbody");
+            employeesTable.appendChild(tableRow);
         }
     }
 
-    // function to get data from db and populate the employees table with it
-    function GetPageList()
+    function populateAllRowsOnPage(employees, CurrentPageNumber)
     {
+        let startIndex = (CurrentPageNumber * 100) - 99;
+        for (let i = startIndex; i < startIndex + 99; i++)
+        //for (let i = 1; i < 100; i++)
+        {
+            let employee = new Employee(employees[i].firstName, employees[i].lastName, employees[i].officeName, employees[i].position);
+            let rowNumber = i % 100;
+            $("#row_" + rowNumber.toString()).show();
+            let rowNumberId = "thRowNumber_" + rowNumber.toString();//(rowNumber+1).toString();
+            let th = document.getElementById(rowNumberId);
+
+            let thValue = (rowNumber + (100 * (CurrentPageNumber - 1)));
+            //console.log(`thValue: ${thValue}`);
+            th.innerHTML = thValue.toString();
+
+            let td1 = document.getElementById("tdFirstName_" + rowNumber.toString());
+            let td2 = document.getElementById("tdLastName_" + rowNumber.toString());
+            let td3 = document.getElementById("tdOfficeName_" + rowNumber.toString());
+            let td4 = document.getElementById("tdPosition_" + rowNumber.toString());
+
+            td1.innerHTML = employee.firstName;
+            td2.innerHTML = employee.lastName;
+            td3.innerHTML = employee.officeName;
+            td4.innerHTML = employee.position;
+
+            //if we've reached end of employees list then clear out all remaining rows
+            if (i === employees.length - 1)
+            {
+                let remainingRows = 99 - (i % 100);
+                console.log(`remaining rows: ${remainingRows}`);
+                for (let i2 = (i%100)-1; i2 < 100; i2++)
+                {
+                    $("#row_" + i2.toString()).hide();
+                }
+                return;
+            }            
+        }
+    }    
+
+    function getAllEmployees()
+    {
+        let list = new Array();
         $.ajax({
-            method: "POST",
-            url: "@Url.Action("GetPageList", "Test")",
-            data: JSON.stringify({ pageNumber: CurrentPageNumber }),
+            type: "POST",
+            url: "@Url.Action("GetAllEmployees", "Test")",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
+            async: false,
             success: function (response)
             {
-                console.log("response length: " + response.length);
-                if (response.length > 0) {
-                    EmployeesList = response;
-                    // iterate through list of employees data
-                    for (let i = 0; i < response.length; i++) {
-                        let employee = new Employee(response[i].firstName, response[i].lastName, response[i].officeName, response[i].position);
+                if (typeof response != undefined || typeof response != null)
+                {
+                    if (response.length > 0) list = response;
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) { console.log("Error- Status: " + textStatus + "<br />jqXHR Status: " + jqXHR.status + "<br />jqXHR Response Text:" + jqXHR.responseText); }
+        });
+        return list;
+    }    
 
-                        let rowNumber = i + 1;
+    //event handling
+    var previousButtons = document.getElementsByClassName("previous");
+    var nextButtons = document.getElementsByClassName("next");
 
-                        let th = document.getElementById("thRowNumber_" + rowNumber.toString());
-
-                        if (CurrentPageNumber === 1) th.innerHTML = rowNumber.toString();
-                        else {
-                            let thValue = rowNumber + (100 * (CurrentPageNumber - 1));
-                            th.innerHTML = thValue.toString();
-                        }
-
-                        let td1 = document.getElementById("tdFirstName_" + rowNumber.toString());
-                        let td2 = document.getElementById("tdLastName_" + rowNumber.toString());
-                        let td3 = document.getElementById("tdOfficeName_" + rowNumber.toString());
-                        let td4 = document.getElementById("tdPosition_" + rowNumber.toString());
-
-                        td1.innerHTML = employee.firstName;
-                        td2.innerHTML = employee.lastName;
-                        td3.innerHTML = employee.officeName;
-                        td4.innerHTML = employee.position;
-
-                        let rowId = "row_" + rowNumber.toString();
-                        let tableRow = document.getElementById(rowId);
-                        tableRow.appendChild(th);
-                        tableRow.appendChild(td1);
-                        tableRow.appendChild(td2);
-                        tableRow.appendChild(td3);
-                        tableRow.appendChild(td4);
-
-                        // clear out employees table
-                        var employeesTable = document.querySelector("#employees > tbody");
-                        employeesTable.appendChild(tableRow);
+    function previousButtonHandler()
+    {
+        --CurrentPageNumber;
+        //console.log(`Current page number: ${CurrentPageNumber}`);
+        populateAllRowsOnPage(EmployeesList,CurrentPageNumber);
+        if (CurrentPageNumber < 2)
+        {
+            for (let i = 0; i < previousButtons.length; i++)
+            {
+                previousButtons[i].disabled = true;
+            }
+        }
+        else
+        {
+            for (let i = 0; i < previousButtons.length; i++)
+            {
+                previousButtons[i].disabled = false;
+            }
+        }
+        if (CurrentPageNumber < totalNumberOfPages)
+        {
+            for (let i = 0; i < nextButtons.length; i++)
+            {
+                nextButtons[i].disabled = false;
+            }
+        }
+        document.getElementById("inputPageNumber").value = CurrentPageNumber;
+    }
+    function nextButtonHandler()
+    {
+        ++CurrentPageNumber;
+        //console.log(`Current page number: ${CurrentPageNumber}`);
+        populateAllRowsOnPage(EmployeesList,CurrentPageNumber);
+        if (CurrentPageNumber > 1)
+        {
+            for (let i = 0; i < previousButtons.length; i++)
+            {
+                //console.log(`iterating through previous buttons`);
+                previousButtons[i].disabled = false;
+            }
+        }
+        if (CurrentPageNumber === totalNumberOfPages)
+        {
+            for (let i = 0; i < nextButtons.length; i++)
+            {
+                nextButtons[i].disabled = true;
+            }            
+        }
+        else
+        {
+            for (let i = 0; i < nextButtons.length; i++)
+            {
+                nextButtons[i].disabled = false;
+            }
+        }
+        document.getElementById("inputPageNumber").value = CurrentPageNumber;
+    }
+    function inputPageNumberHandler(event)
+    {
+        if (event.key === "Enter")
+        {
+            if ((((this.value * 10) % 10) === 0) && (this.value >= 1 || this.value <= totalNumberOfPages))
+            {
+                document.getElementById("errorPageNumber").hidden = true;
+                event.preventDefault();
+                CurrentPageNumber = this.value;
+                if (CurrentPageNumber != totalNumberOfPages)
+                {
+                    for (let i = 0; i < nextButtons.length; i++)
+                    {
+                        nextButtons[i].disabled = false;
                     }
                 }
                 else
                 {
-                    disableNext();
+                    for (let i = 0; i < nextButtons.length; i++)
+                    {
+                        nextButtons[i].disabled = true;
+                    }
                 }
-            },
-            error: function (errorMessage)
+                populateAllRowsOnPage(EmployeesList, CurrentPageNumber);                 
+            }
+            else
             {
-                console.log("There was an error for some reason.");
+                document.getElementById("errorPageNumber").hidden = false;
+            }            
+        }
+    }
+    function eventListeners()
+    {
+        for (let i = 0; i < previousButtons.length; i++)
+        {
+            previousButtons[i].addEventListener("click", previousButtonHandler);
+            nextButtons[i].addEventListener("click", nextButtonHandler);
+        }
+        document.addEventListener("keydown", (event) => {
+            switch (event.key) {
+                case "ArrowRight":
+                    nextButtons[0].click();
+                    console.log(`right arrow clicked`);
+                    break;
+                case "ArrowLeft":
+                    previousButtons[0].click();
+                    console.log(`left arrow clicked`);
+                    break;
             }
         });
+        document.getElementById("inputPageNumber").addEventListener("keydown", inputPageNumberHandler);
     }
-
-    function enablePrevious()
-    {
-        let previousButton = document.getElementById("previous");
-        previousButton.disabled = false;
-        if (previousButton.classList.contains("disabled")) previousButton.classList.remove("disabled");
-    }
-
-    function disablePrevious()
-    {
-        let previousButton = document.getElementById("previous");
-        previousButton.disabled = true;
-        if (previousButton.classList.contains("disabled") === false) previousButton.classList.add("disabled");
-    }
-
-    function enableNext()
-    {
-        let nextButton = document.getElementById("next");
-        nextButton.disabled = false;
-        if (nextButton.classList.contains("disabled")) nextButton.classList.remove("disabled");
-    }
-
-    function disableNext()
-    {
-        let nextButton = document.getElementById("next");
-        nextButton.disabled = true;
-        if (nextButton.classList.contains("disabled") === false) nextButton.classList.add("disabled");
-    }
-
-    function NextPage()
-    {
-        if (EmployeesList != undefined || EmployeesList != null)
-        {
-            if(EmployeesList.length > 0) CurrentPageNumber = CurrentPageNumber + 1;
-        }
-         
-        console.log("Current page number: " + CurrentPageNumber);
-        
-        if (CurrentPageNumber > 1)
-        {
-            enablePrevious();
-        }
-        GetPageList();
-    }
-
-    function PreviousPage()
-    {
-        CurrentPageNumber = CurrentPageNumber - 1;
-        console.log("Current page number: " + CurrentPageNumber);
-        
-        if (CurrentPageNumber < 2)
-        {
-            disablePrevious();
-        }
-        GetPageList();
-    }
-
-    //document.getElementById("next").addEventListener("click", NextPage);
-    //document.getElementById("previous").addEventListener("click", PreviousPage);
-
+    //function enableByClassName(className, enable = true)
+    //{
+    //    let elements = document.getElementsByClassName(className);
+    //    for (let i = 0; i < elements.length; i++)
+    //    {
+    //        if (enable) elements[i].disabled = false;
+    //        if (enable === false) elements[i].disabled = true;
+    //    }
+    //}
 </script>
